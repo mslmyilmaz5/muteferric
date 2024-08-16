@@ -17,8 +17,9 @@ const attachCookiesToResponse = ({res, user}) => {
         httpOnly: true,
         expires: new Date(Date.now() + oneDay),
         secure: process.env.NODE_ENV === 'production',
+        sameSite: 'Strict'
         //signed: true,
-        sameSite: 'None' // Ensure this is set for cross-site cookies
+       
     })
     return token;
 
