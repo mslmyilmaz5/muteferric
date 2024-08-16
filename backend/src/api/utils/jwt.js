@@ -17,7 +17,7 @@ const attachCookiesToResponse = ({res, user}) => {
         httpOnly: true,
         expires: new Date(Date.now() + oneDay),
         secure: true,
-        sameSite: "none", // Allow the cookie to be sent in cross-site requests
+        SameSite: "None", // Allow the cookie to be sent in cross-site requests
         //signed: true,
        
     })
