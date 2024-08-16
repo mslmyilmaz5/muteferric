@@ -43,7 +43,8 @@ export const usePoemFormPost = () => {
         if (response.ok) {
             dispatch({ type: 'CREATE_POEM', payload: json });
             setIsLoading(false);
-            navigate('/myPoetries');
+            <Link to="/myPoetries">MÜTEFERRİÇ</Link>
+            window.location.reload(); 
         }
 
     };
