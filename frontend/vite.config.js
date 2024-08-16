@@ -5,9 +5,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'dist',
-    emptyOutDir: true,
   },
-  base: '/frontend/', // Make sure to update this to reflect the correct base path if necessary
   server: {
     proxy: {
       '/api': {
