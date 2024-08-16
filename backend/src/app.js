@@ -2,6 +2,7 @@ require('dotenv').config();
 
 // for express
 const express = require('express');
+const path = require('path');
 const app = express();
 
 // rest of the packages
@@ -11,6 +12,7 @@ const cookieParser = require('cookie-parser');
 
 // database
 const connect_db = require('./api/db/connection');
+
 
 
 // routers
@@ -26,7 +28,7 @@ const corsOptions = {
     origin: ['http://localhost:5173', 'https://muteferric.onrender.com'], // Allow both localhost and your deployed frontend
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
-
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
 // middleware
 app.use(cors(corsOptions));
 app.use(cookieParser());
@@ -39,7 +41,9 @@ app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/poet', poetRouter);
 
-
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
 
 const port = process.env.PORT || 5000;
 const start = async () => {
