@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
 export default defineConfig({
+  base: '/',  
   plugins: [react()],
   build: {
     outDir: 'dist',
@@ -10,7 +10,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://white-hohh.onrender.com/api',
+        target: 'https://your-backend-url.onrender.com/api',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
