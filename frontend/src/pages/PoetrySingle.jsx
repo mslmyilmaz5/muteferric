@@ -7,7 +7,7 @@ import { MdDelete } from "react-icons/md";
 import { GrUpdate } from "react-icons/gr";
 import Navbar from '../components/header';
 import Loading from '../components/loading';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import BASE_URL from '../utils/url';
 
 export const PoetrySingle = () => {
