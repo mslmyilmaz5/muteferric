@@ -1,0 +1,48 @@
+header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    border-bottom: 1px solid black;
+    padding: 20px;
+    background-color: #cccaca;
+
+}
+
+
+#header-content {
+    display: grid;
+    grid-template-columns: repeat(5,1fr) ; 
+    
+}
+
+#main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+#main a {
+    font-size: 1.9em;
+    color:black;
+    padding-left:60px
+}
+#poem-page-link{
+    font-size: 1.3em;
+    padding-left: 30px;
+    display: flex;
+    align-items: center;
+}
+#poem-page-link a {
+    color: black;
+}
+.header-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.header-button {
+    border: 1px solid black;
+    padding:5px;
+    color:black
+}

@@ -1,0 +1,120 @@
+.create-poem-page {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto 1fr auto;
+    height: 100vh;
+}
+
+#left-part {
+    grid-column: span 3;
+    background: linear-gradient(to top right, #cccaca  50%, transparent 50%);
+}
+
+#main-part {
+    display: grid;
+    grid-column: span 6;
+    grid-template-rows: auto 1fr auto;
+    
+}
+
+#main-part-form {
+    display: flex;
+    flex-direction: column;
+    grid-template-rows: auto auto auto;
+
+}
+
+#form-head-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+
+    
+}
+
+#form-poem-input {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 15px
+}
+
+#input-field-h {
+    border: 1px solid black;
+    border-radius: 0.25rem;
+    padding: 0.25rem;
+}
+
+#form-poem-button-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 15px;
+}
+
+#check-box-part {
+    display: flex;
+    align-items: center;
+}
+
+#isVisible {
+    display: none; /* Checkbox'ı gizler */
+}
+
+#check-box-part label {
+    padding-left: 10px; /* Label textinin soluna padding ekler */
+    cursor: pointer;
+}
+
+#check-box-part label::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    border: 1px solid black;
+    border-radius: 4px;
+    background-color: white;
+    transition: background-color 0.3s ease;
+}
+
+#isVisible:checked + label::before {
+    background-color: black; /* Checkbox işaretliyken dolu kutu rengi */
+}
+
+#button-part {
+    display: flex;
+    justify-content: flex-end;
+  
+}
+
+#button-part button {
+    padding:8px;
+
+  
+}
+
+#main-part-header {
+    text-align: center;
+    padding: 10px;
+}
+
+#main-part-header p {
+    font-family: "Poppins";
+    font-size: 1.7em;
+    font-style: italic;
+    text-align: center;
+}
+#check-box-part {
+    
+}
+
+.submit-button-poem{
+    border:1px solid black;
+    padding: 3px;
+}
+
+#right-part {
+    grid-column: span 3;
+    background: linear-gradient(to top left, #cccaca  50%, transparent 50%);
+}

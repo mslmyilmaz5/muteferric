@@ -1,0 +1,33 @@
+const Poet = require("../models/poet")
+const Poetry = require("../models/poetry");
+
+const mongoose = require('mongoose');
+
+
+const registerPoet = async(data) => {
+    const poet = await Poet.create(data)
+    return poet;
+}
+
+const registerPoem = async(poetryData) => {
+    const {title, poetry, isVisible, type,userId} = poetryData;
+    return await Poetry.create({title,poetry,isVisible,type,userId});
+}
+
+const getPoet = async (userId) => {
+    if (!mongoose.Types.ObjectId.isValid(userId.id))
+        throw new Error('No such user');
+
+    return await Poet.findById(userId.id).select('-password -email -updatedAt');
+}
+
+const getAllPoets = async () => {
+    return await Poet.find({}).select('_id name');
+};
+
+module.exports = {
+    registerPoet,
+    registerPoem,
+    getPoet,
+    getAllPoets,
+};

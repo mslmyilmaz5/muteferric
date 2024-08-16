@@ -1,0 +1,12 @@
+#p-about-part-1-f {
+    height: 250px;
+    word-wrap: break-word;      /* Allows breaking long words */
+    overflow-wrap: break-word;  /* Ensures long words wrap to the next line */
+    word-break: break-all;      /* Breaks the word at any point if necessary */
+    white-space: normal;        /* Allows text to wrap normally */
+    padding: 10px;              /* Adds padding for better readability */
+    box-sizing: border-box;     /* Ensures padding is included in the element's width/height */
+    max-height: 350px;   
+    border: 1px solid #cccaca;
+    overflow-y: auto;           /* Enables vertical scrolling if content overflows */
+}
