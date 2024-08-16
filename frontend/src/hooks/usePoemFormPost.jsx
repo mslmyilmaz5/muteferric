@@ -44,7 +44,6 @@ export const usePoemFormPost = () => {
             dispatch({ type: 'CREATE_POEM', payload: json });
             setIsLoading(false);
             navigate('/myPoetries');
-            window.location.reload(); 
         }
 
     };
