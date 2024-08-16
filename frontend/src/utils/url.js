@@ -1,3 +1,3 @@
-const BASE_URL = 'https://white-hohh.onrender.com/api/v1';
+const BASE_URL = 'https://muteferric-backend.onrender.com/api/v1';
 
 export default BASE_URL;
