@@ -134,11 +134,11 @@ export const PoetrySingle = () => {
                         )}
                     </div>
                     <div id="p-s-c-poem">
-                        <strong>
+                       <strong>
                             <p>
-                                <a href={`/viewPoet/${p_user ? p_user._id : '#'}`}>
+                                <Link to={`/viewPoet/${p_user ? p_user._id : '#'}`}>
                                     {p_user ? p_user.name : ''}
-                                </a>
+                                </Link>
                             </p>
                         </strong>
                     </div>
