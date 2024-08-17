@@ -24,7 +24,7 @@ const poetRouter = require("./api/routes/poetRoute");
 
 // CORS options
 const corsOptions = {
-    origin: ['http://localhost:5173', 'https://muteferric.onrender.com'], // Allow both localhost and your deployed frontend
+    origin: ['http://localhost:5173', 'https://muteferric.onrender.com', 'https://siirle.me'], // Allow both localhost and your deployed frontend
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
 
