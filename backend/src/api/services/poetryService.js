@@ -1,5 +1,6 @@
 const Poetry = require('../models/poetry');
-
+const User = require('../models/user');
+const Poet = require('../models/poet');
 
 const mongoose = require('mongoose')
 
@@ -57,6 +58,7 @@ const updatePoetry = async (poetryData, poetryId) => {
 const getLatestPoetries = async() => {
     return await Poetry.find(
         {isVisible:true, type:"p"})
+        .select('_id title createdAt')
         .sort({ createdAt: -1 })
         .limit(5);
 };
@@ -65,19 +67,42 @@ const getLatestPoetries = async() => {
 const getLatestEssays = async() => {
     return await Poetry.find(
         {isVisible:true, type:"e"})
+        .select('_id title createdAt')
         .sort({ createdAt: -1 })
         .limit(5);
 };
 
 
-// search poems
+// search poems and users
+// search poems and users
 const searchPoems = async (query) => {
-    return await Poetry.find({
-        title: { $regex: `^${query}`, $options: 'i' }, 
+    const poems = await Poetry.find({
+        title: { $regex: `^${query}`, $options: 'i' },
         isVisible: true,
     })
     .limit(10) // Limit results for performance
-    .select('userId title'); // Only return title and _id fields
+    .select('_id title'); // Only return _id and title fields
+
+    const users = await User.find({
+        name: { $regex: `^${query}`, $options: 'i' }
+    })
+    .limit(10) // Limit results for performance
+    .select('_id name'); // Only return _id and name fields
+
+    const poets = await Poet.find({
+        name: { $regex: `^${query}`, $options: 'i' }
+    })
+    .limit(10) // Limit results for performance
+    .select('_id name'); // Only return _id and name fields
+
+    // Combine results and include the type field
+    const results = [
+        ...poems.map(poem => ({ _id: poem._id, title: poem.title, type: 'poem' })),
+        ...users.map(user => ({ _id: user._id, title: user.name, type: 'user' })),
+        ...poets.map(poet => ({ _id: poet._id, title: poet.name, type: 'poet' }))
+    ];
+
+    return results;
 };
 
 const getDatabaseInfo = async () => {

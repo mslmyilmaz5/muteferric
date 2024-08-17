@@ -40,9 +40,29 @@ getAllPoets = async (req, res) => {
     }
 };
 
+
+getLastPoets = async (req,res) => {
+    try {
+      const last_poets = await poetService.getLastPoets();
+      res.status(200).json(last_poets);
+    } catch(error){
+      res.status(500).json({error: error.message});
+    }
+}
+
+getDatabaseInfo = async (req,res) => {
+    try {
+        const results = await poetService.getDatabaseInfo();
+        res.status(200).json(results);
+    } catch(error){
+        res.status(500).json({error: error.message});
+    }
+}
 module.exports = {
     registerPoet,
     registerPoem,
     getPoet,
-    getAllPoets
+    getAllPoets,
+    getLastPoets,
+    getDatabaseInfo
 }

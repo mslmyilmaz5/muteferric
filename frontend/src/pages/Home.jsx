@@ -6,25 +6,33 @@ import { useAuthContext } from '../hooks/useAuthContext';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../components/loading';
 import BASE_URL from '../utils/url';
+import { formatDate } from '../utils/garbage';
 
 const Home = () => {
-  
+
   const [poems, setPoems] = useState([]);
   const [essays, setEssays] = useState([]);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [dbInfo, setDbInfo] = useState(0);
-
+  const [dbInfoUser,setDbInfoUser] = useState(0);
+  const [dbInfoPoet,setDbInfoPoet] = useState(0);
+  const [poets, setPoets] = useState([]);
+  const [users, setUsers] = useState([]);
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [poemsRes, essaysRes, dbInfoRes] = await Promise.all([
+        const [poemsRes, essaysRes, dbInfoRes, poetRes, userRes , dbInfoUserRes, dbInfoPoetRes] = await Promise.all([
           fetch(`${BASE_URL}/poetry/getLastPoems`),
           fetch(`${BASE_URL}/poetry/getLastEssays`),
           fetch(`${BASE_URL}/poetry/dbinfo`),
+          fetch(`${BASE_URL}/poet/getLastPoets`),
+          fetch(`${BASE_URL}/user/getLastUsers`),
+          fetch(`${BASE_URL}/user/dbinfo`),
+          fetch(`${BASE_URL}/poet/dbinfo`),
         ]);
 
         if (poemsRes.ok) {
@@ -35,6 +43,18 @@ const Home = () => {
         }
         if (dbInfoRes.ok) {
           setDbInfo(await dbInfoRes.json());
+        }
+        if (poetRes.ok) {
+          setPoets(await poetRes.json());
+        }
+        if (userRes.ok) {
+          setUsers(await userRes.json());
+        }
+        if (userRes.ok) {
+          setDbInfoUser(await dbInfoUserRes.json());
+        }
+        if (dbInfoPoetRes.ok) {
+          setDbInfoPoet(await dbInfoPoetRes.json());
         }
       } catch (err) {
         console.error('Error fetching data:', err);
@@ -65,34 +85,42 @@ const Home = () => {
     navigate(`/viewPoem/${poem_id}`);
   };
 
+  const handleNavigateToPoet = (poet_id) => {
+    navigate(`/viewPoet/${poet_id}`);
+  };
+
+
   return (
     <div className="home-page-content">
       <div className="navbar-login">
         <Navbar />
       </div>
       <div id="leftt-content">
-        {user ? (
-          <div id="user-info">
-            <p>Hoş geldin <strong>{user.tokenUser.name}!</strong></p>
-          </div>
-        ) : (
-          <div id="user-info">
-            <p>Hemen kayıt olun ve paylaşmaya başlayın!</p>
-          </div>
-        )}
-        <div id="left-1"></div>
+      <div id="left-1">
+        { user ? <div id="left1-b"><p> Hoşgeldin <strong>{user.tokenUser.name}</strong></p></div>
+        : <div id="left1-b"><p> Sen de kayıt olup hemen dolaşanların arasına katıl!</p></div>}
+        <div id="left1-c"><p> Müteferriç'te toplam</p></div>
+        <div id="left1-c"><p> <strong>{dbInfoUser} </strong>dolaşan</p></div>
+        <div id="left1-c"><p> <strong>{dbInfoPoet} </strong> varan</p></div>
+        <div id="left1-c"><p> <strong>{dbInfo} </strong>yazı ve şiir</p></div>
+      </div>
+      <div id="left-2">
+      <div id="left1-b"><p><strong>Günün Köşeşi</strong></p></div>
+      <div id="left-2c"><p>
+      Tarihi galiplerin yazdığı iddiasını yerinde buluyor musunuz? Ben böyle bir iddiayı yerinde bulmamakla kalmadığım gibi yersiz de buluyorum. Her şeyden önce “tarih yazmak” ibaresi yersiz. Dikkatle bakarsak mücrimleri aklamanın bir türüne de tarih dendiğini görürüz. Tarih olarak bildiğimiz ve bildirdiğimiz ne varsa hepsi değilse bile ekseriyeti suçluların elinden çıkmıştır. O suçları işlediğiniz ortaya çıkarsa telâfisi çok pahalıya patlayacak kayıplara uğramanız besbelli olduğu için bir uzlaşma alanında teselli ararsınız. Ne yapıp edip insanlık ortamını size hayat hakkını o suçlar ortaya çıksa bile verecek bir düzene sokarsınız.</p></div>
+      </div>
       </div>
 
       <div id="main-content">
         <div id="search-bar-content">
           <div id="title-search">
-            <p>Müteferriç'de şiir veya yazı ara!</p>
+            <p>Müteferriç'de ara!</p>
           </div>
           <div id="search-bar-div">
             <input
               type="text"
               id="search-bar"
-              placeholder="Şimdi ara..."
+              placeholder="Şair,şiir veya yazı ara..."
               value={query}
               onChange={handleInputChange}
             />
@@ -101,17 +129,25 @@ const Home = () => {
             {results.map((result) => (
               <div id="poet-1" key={result._id}>
                 <p>{result.title}</p>
+                <div id="poet-1-b">
                 <button
                   id="bbutton"
-                  onClick={() => handleNavigateToPoem(result._id)}
+                  onClick={() => {
+                    if (result.type === 'poem') {
+                      handleNavigateToPoem(result._id);
+                    } else {
+                      handleNavigateToPoet(result._id);
+                    }
+                  }}
                 >
                   <MdOutlineReadMore />
-                </button>
+                </button>    
+                </div>
+                           
               </div>
             ))}
           </div>
         </div>
-
         <div id="main-content-bottom">
           <div id="bottom-1">
             <div id="bottom-1-head">
@@ -123,6 +159,7 @@ const Home = () => {
                   <div id="content-1" key={poem._id}>
                     <div id="content-1-head">
                       <p>{poem.title}</p>
+                      <p className="date-right">{formatDate(poem.createdAt)}</p>
                     </div>
                     <div id="content-1-button">
                       <button
@@ -148,9 +185,12 @@ const Home = () => {
               {essays.length > 0 ? (
                 essays.map((essay) => (
                   <div id="content-1" key={essay._id}>
+                   
                     <div id="content-1-head">
                       <p>{essay.title}</p>
+                      <p className="date-right">{formatDate(essay.createdAt)}</p>
                     </div>
+                    
                     <div id="content-1-button">
                       <button
                         id="ar-small-button"
@@ -170,10 +210,59 @@ const Home = () => {
       </div>
 
       <div id="right-content">
-        <div id="user-info">
-          <p>Mütefferiç'te toplam yazı ve şiir sayısı: {dbInfo}</p>
+
+        <div id="right-1">
+          <div id="right-1-h"><p>Varan Şairler</p></div>
+          <div id="right-1-c">
+
+            {poets.length > 0 ? (
+              poets.map((poet) => (
+                <div id="content-1" key={poet._id}>
+                  <div id="content-1-head">
+                    <p>{poet.name}</p>
+                  </div>
+                  <div id="content-1-button">
+                    <button
+                      id="ar-small-button"
+                      onClick={() => handleNavigateToPoet(poet._id)}
+                    >
+                      <MdOutlineReadMore />
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p><Loading /></p>
+            )}
+          </div>
         </div>
-        <div id="right-1"></div>
+        <div id="right-2">
+          <div id="right-1-h"><p>Dolaşan Şairler</p></div>
+          <div id="right-1-c">
+            {users.length > 0 ? (
+              users.map((user) => (
+                <div id="content-1" key={user._id}>
+                  <div id="content-1-head">
+                    <p>{user.name}</p>
+                  </div>
+                  <div id="content-1-button">
+                    <button
+                      id="ar-small-button"
+                      onClick={() => handleNavigateToPoet(user._id)}
+                    >
+                      <MdOutlineReadMore />
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p><Loading /></p>
+            )}
+
+
+
+          </div>
+        </div>
       </div>
 
       <div className="footer">

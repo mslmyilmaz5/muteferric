@@ -1,6 +1,7 @@
 const userService = require('../services/userService');
 
-const getUser = async (req, res) => {
+
+getUser = async (req, res) => {
     try {
         const user = await userService.getUser(req.params);
         res.status(200).json(user);
@@ -9,7 +10,7 @@ const getUser = async (req, res) => {
     }
 };
 
-const getUserAbouts = async (req, res) => {
+getUserAbouts = async (req, res) => {
     try {
         const user_abouts = await userService.getUserAbouts(req.params);
         res.status(200).json(user_abouts);
@@ -20,7 +21,7 @@ const getUserAbouts = async (req, res) => {
 
 
 // update about_one
-const updateAboutOne = async (req,res) => {
+updateAboutOne = async (req,res) => {
     try {
         const { id } = req.params;
         const user = await userService.updateAboutOne(req.body,id);
@@ -33,7 +34,7 @@ const updateAboutOne = async (req,res) => {
 }
 
 // update about_two
-const updateAboutTwo = async (req,res) => {
+updateAboutTwo = async (req,res) => {
     try {
         const { id } = req.params;
         const user = await userService.updateAboutTwo(req.body,id);
@@ -46,9 +47,30 @@ const updateAboutTwo = async (req,res) => {
 }
 
 
+getLastUsers = async (req, res) => {
+    try {
+        const last_users = await userService.getLastUsers();
+        res.status(200).json(last_users);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+getDatabaseInfo = async (req,res) => {
+    try {
+        const results = await userService.getDatabaseInfo();
+        res.status(200).json(results);
+    } catch(error){
+        res.status(500).json({error: error.message});
+    }
+}
+
+
 module.exports = {
     getUser,
     getUserAbouts,
     updateAboutOne,
-    updateAboutTwo
+    updateAboutTwo,
+    getLastUsers,
+    getDatabaseInfo
 };

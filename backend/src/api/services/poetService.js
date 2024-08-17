@@ -25,9 +25,24 @@ const getAllPoets = async () => {
     return await Poet.find({}).select('_id name');
 };
 
+
+const getLastPoets = async() => {
+    return await Poet.find()
+        .select('name _id')
+        .sort({ createdAt: -1 })
+        .limit(5);
+};
+
+const getDatabaseInfo = async () => {
+    const stats = await Poet.countDocuments();
+    return stats;
+};
+
 module.exports = {
     registerPoet,
     registerPoem,
     getPoet,
     getAllPoets,
+    getLastPoets,
+    getDatabaseInfo
 };

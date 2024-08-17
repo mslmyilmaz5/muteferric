@@ -52,10 +52,24 @@ const updateAboutTwo = async (data, user_id) => {
     return user;
 };
 
+const getLastUsers = async () => {
+    return await User.find()
+    .select('-password -email -updatedAt')
+    .sort({ createdAt: -1 })
+    .limit(5);   
+}
+
+const getDatabaseInfo = async () => {
+    const stats = await User.countDocuments();
+    return stats;
+};
+
 
 module.exports = {
     getUser,
     getUserAbouts,
     updateAboutOne,
-    updateAboutTwo
+    updateAboutTwo,
+    getLastUsers,
+    getDatabaseInfo
 };

@@ -9,6 +9,7 @@ import Navbar from '../components/header';
 import Loading from '../components/loading';
 import { Link } from 'react-router-dom';
 import BASE_URL from '../utils/url';
+import {formatDate} from '../utils/garbage';
 
 export const PoetrySingle = () => {
     const { poem_id } = useParams();
@@ -84,16 +85,7 @@ export const PoetrySingle = () => {
         });
     };
 
-    const formatDate = (dateString) => {
-        const options = {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-        };
-        return new Date(dateString).toLocaleDateString('tr-TR', options);
-    };
+
 
     const handleDeleteClick = async () => {
         try {
@@ -180,10 +172,10 @@ export const PoetrySingle = () => {
             </div>
             {showConfirmDialog && (
                 <div className="confirm-dialog">
-                    <p>Are you sure you want to delete this poem?</p>
+                    <p>Silmek istediğine emin misin?</p>
                     <div className="confirm-dialog-buttons">
-                        <button onClick={handleDeleteClick}>Yes</button>
-                        <button onClick={() => setShowConfirmDialog(false)}>No</button>
+                        <button onClick={handleDeleteClick}>Evet</button>
+                        <button onClick={() => setShowConfirmDialog(false)}>Hayır</button>
                     </div>
                 </div>
             )}
