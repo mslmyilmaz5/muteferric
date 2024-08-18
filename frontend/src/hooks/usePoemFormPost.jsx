@@ -21,7 +21,7 @@ export const usePoemFormPost = () => {
             return;
         }
 
-        const url = isUpdated ? `${BASE_URL}/poetry/update/${updatedPoemId}` :  `${BASE_URL}/poetry/post`;
+        const url = isUpdated ? `${BASE_URL}/siir/guncelle/${updatedPoemId}` :  `${BASE_URL}/siir/paylas`;
         const method = isUpdated ? 'PUT' : 'POST';
 
 

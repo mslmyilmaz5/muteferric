@@ -41,10 +41,9 @@ getVisiblePoetries = async (req,res) =>
 getPoetry = async (req, res) => {
 
     try {
-        
-        const poem_id = req.params.id;
-        const poem = await poetryService.getPoetry(poem_id);
-        
+       const poem_id = req.params.id;
+       const poem = await poetryService.getPoetry(poem_id);
+       
         if (!poem) {
             return res.status(404).json({error: 'No such poem'});
         }

@@ -31,7 +31,7 @@ const Poetry = () => {
   const currentEssays = essaysList.slice((currentEssayPage - 1) * poemsPerPage, currentEssayPage * poemsPerPage);
 
   const handleNavigateToPoem = (poem_id) => {
-    navigate(`/viewPoem/${poem_id}`);
+    navigate(`/siir/${poem_id}`);
   };
 
   const handleUpdateAboutOne = async (e) => {
@@ -76,7 +76,7 @@ const Poetry = () => {
 
   useEffect(() => {
     const fetchPoems = async () => {
-      const response = await fetch(`${BASE_URL}/poetry?user_id=${user.tokenUser.userId}`, {
+      const response = await fetch(`${BASE_URL}/siir?user_id=${user.tokenUser.userId}`, {
         method: 'GET',
         headers: { 'Authorization': `Bearer ${user.token}` },
         credentials: 'include'
@@ -277,8 +277,8 @@ const Poetry = () => {
       <div id="p-page-right">
         <div id="p-about-user">
           <div id="button-parts">
-            <div className="button-new-poetry"><button id="add-new-button" onClick={() => navigate('/createPoem', { state: { type: 'p' } })}> Yeni şiir ekle</button></div>
-            <div className="button-new-poetry"><button id="add-new-button" onClick={() => navigate('/createPoem', { state: { type: 'e' } })}> Yeni yazı ekle</button></div>
+            <div className="button-new-poetry"><button id="add-new-button" onClick={() => navigate('/yeni-yazi-siir', { state: { type: 'p' } })}> Yeni şiir ekle</button></div>
+            <div className="button-new-poetry"><button id="add-new-button" onClick={() => navigate('/yeni-yazi-siir', { state: { type: 'e' } })}> Yeni yazı ekle</button></div>
             <div className="button-new-poetry"><button id="add-new-button" onClick={() => navigate(`/viewPoet/${user.tokenUser.userId}` )}> Profilini gör</button></div>
           </div>
         </div>

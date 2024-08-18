@@ -19,7 +19,7 @@ const Navbar = () => {
           <Link to="/">MÜTEFERRİÇ</Link>
         </div>
         <div id="poem-page-link">
-          {user && <Link to="/myPoetries">Profilim</Link>}
+          {user && <Link to="/profilim">Profilim</Link>}
         </div>
       </div>
       {user ? (
@@ -28,8 +28,8 @@ const Navbar = () => {
         </div>
       ) : (
         <div className="header-buttons">
-          <button className="header-button" onClick={() => navigate('/login')}>Giriş yap</button>
-          <button className="header-button" onClick={() => navigate('/signup')}>Kayıt Ol</button>
+          <button className="header-button" onClick={() => navigate('/giris')}>Giriş yap</button>
+          <button className="header-button" onClick={() => navigate('/kayit-ol')}>Kayıt Ol</button>
         </div>
       )}
     </header>

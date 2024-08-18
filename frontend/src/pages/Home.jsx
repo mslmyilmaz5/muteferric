@@ -26,9 +26,9 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const [poemsRes, essaysRes, dbInfoRes, poetRes, userRes , dbInfoUserRes, dbInfoPoetRes] = await Promise.all([
-          fetch(`${BASE_URL}/poetry/getLastPoems`),
-          fetch(`${BASE_URL}/poetry/getLastEssays`),
-          fetch(`${BASE_URL}/poetry/dbinfo`),
+          fetch(`${BASE_URL}/siir/son-yazilar`),
+          fetch(`${BASE_URL}/siir/son-siirler`),
+          fetch(`${BASE_URL}/siir/database-bilgi`),
           fetch(`${BASE_URL}/poet/getLastPoets`),
           fetch(`${BASE_URL}/user/getLastUsers`),
           fetch(`${BASE_URL}/user/dbinfo`),
@@ -70,7 +70,7 @@ const Home = () => {
 
     if (value.trim()) {
       try {
-        const response = await fetch(`${BASE_URL}/poetry/search?q=${value}`);
+        const response = await fetch(`${BASE_URL}/siir/ara?q=${value}`);
         const json = await response.json();
         setResults(json);
       } catch (err) {
@@ -82,17 +82,18 @@ const Home = () => {
   };
 
   const handleNavigateToPoem = (poem_id) => {
-    navigate(`/viewPoem/${poem_id}`);
+    navigate(`/siir/${poem_id}`);
   };
 
   const handleNavigateToPoet = (poet_id) => {
-    navigate(`/viewPoet/${poet_id}`);
+    navigate(`/sair/${poet_id}`);
   };
 
 
   return (
     <div className="home-page-content">
       <div className="navbar-login">
+  
         <Navbar />
       </div>
       <div id="leftt-content">
@@ -100,6 +101,7 @@ const Home = () => {
         { user ? <div id="left1-b"><p> Hoşgeldin <strong>{user.tokenUser.name}</strong></p></div>
         : <div id="left1-b"><p> Sen de kayıt olup hemen dolaşanların arasına katıl!</p></div>}
         <div id="left1-c"><p> Müteferriç'te toplam</p></div>
+        
         <div id="left1-c"><p> <strong>{dbInfoUser} </strong>dolaşan</p></div>
         <div id="left1-c"><p> <strong>{dbInfoPoet} </strong> varan</p></div>
         <div id="left1-c"><p> <strong>{dbInfo} </strong>yazı ve şiir</p></div>

@@ -17,8 +17,9 @@ const registerPoem = async(poetryData) => {
 const getPoet = async (userId) => {
     if (!mongoose.Types.ObjectId.isValid(userId.id))
         throw new Error('No such user');
-
+    
     return await Poet.findById(userId.id).select('-password -email -updatedAt');
+
 }
 
 const getAllPoets = async () => {

@@ -16,13 +16,13 @@ export const App = () => {
     <>
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/login' element={!user ? <Login /> : <Navigate to="/" />} />
-        <Route path='/signup' element={!user ? <Signup /> : <Navigate to="/" />} />
+        <Route path='/giris' element={!user ? <Login /> : <Navigate to="/" />} />
+        <Route path='/kayit-ol' element={!user ? <Signup /> : <Navigate to="/" />} />
         <Route path='/admin' element={<Admin />} />
-        <Route path='/myPoetries' element={<Poetry />} />
-        <Route path='/createPoem' element={<CreatePoem />} />
-        <Route path='/viewPoem/:poem_id' element={<PoetrySingle />} />
-        <Route path='/viewPoet/:user_id' element={<PoetryStatic />} />
+        <Route path='/profilim' element={<Poetry />} />
+        <Route path='/yeni-yazi-siir' element={<CreatePoem />} />
+        <Route path='/siir/:poem_id' element={<PoetrySingle />} />
+        <Route path='/sair/:user_id' element={<PoetryStatic />} />
       </Routes>
     </>
   );

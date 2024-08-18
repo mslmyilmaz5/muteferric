@@ -10,3 +10,8 @@
     border: 1px solid #cccaca;
     overflow-y: auto;           /* Enables vertical scrolling if content overflows */
 }
+
+.user-settings-each-h1 {
+    font-size: 1.4em;
+    font-family: 'Poppins', sans-serif; 
+}

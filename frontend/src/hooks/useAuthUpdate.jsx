@@ -27,7 +27,7 @@ export const useAuthUpdate = () => {
         });
         
         const json = await response.json();
-        console.log(json)
+        
         if (!response.ok) {
             setIsLoading(false);
             setError(json.error);
@@ -59,7 +59,7 @@ export const useAuthUpdate = () => {
         });
         
         const json = await response.json();
-        console.log(json)
+     
         if (!response.ok) {
             setIsLoading(false);
             setError(json.error);

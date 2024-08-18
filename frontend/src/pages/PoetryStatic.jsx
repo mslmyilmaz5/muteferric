@@ -45,7 +45,7 @@ export const PoetryStatic = () => {
   };
 
   const handleNavigateToPoem = (poem_id) => {
-    navigate(`/viewPoem/${poem_id}`);
+    navigate(`/siir/${poem_id}`);
   };
 
   useEffect(() => {
@@ -74,7 +74,7 @@ export const PoetryStatic = () => {
           setAboutOne(userData.about_one);
           setAboutTwo(userData.about_two);
 
-          const responsePoems = await fetch(`${BASE_URL}/poetry/v?user_id=${user_id}`, {
+          const responsePoems = await fetch(`${BASE_URL}/siir/gorunur-siirler?user_id=${user_id}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include'
@@ -103,10 +103,10 @@ export const PoetryStatic = () => {
   return (
     <div className="poetry-page-content">
       <div className="navbar-login"><Navbar /></div>
-
+      
       <div id="p-page-left">
         <div id="p-about-user">
-          <div className="user-settings-each"><p>{user.name}</p></div>
+          <div className="user-settings-each-h1"><h1><strong>{user.name}</strong></h1></div>
           <div className="user-settings-each"><p>{user.mahlas}</p></div>
           <div className="user-settings-each">
             <p>Paylaşılan toplam şiir ve yazı sayısı: {poems.length}</p>

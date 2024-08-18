@@ -28,7 +28,7 @@ export const PoetrySingle = () => {
         const fetchPoem = async () => {
             try {
                 // Fetch the poem data
-                const response = await fetch(`${BASE_URL}/poetry/${poem_id}`, {
+                const response = await fetch(`${BASE_URL}/siir/${poem_id}`, {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include'
@@ -73,7 +73,7 @@ export const PoetrySingle = () => {
     }, [poem_id]);
 
     const handleUpdate = (title, poetry, visibility, isUpdated, poemId, poemType) => {
-        navigate('/createPoem', {
+        navigate('/yeni-yazi-siir', {
             state: {
                 defaultTitle: title,
                 defaultPoetry: poetry,
@@ -89,7 +89,7 @@ export const PoetrySingle = () => {
 
     const handleDeleteClick = async () => {
         try {
-            const response = await fetch(`${BASE_URL}/poetry/${poem._id}`, {
+            const response = await fetch(`${BASE_URL}/siir/${poem._id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${user.token}`
@@ -98,7 +98,7 @@ export const PoetrySingle = () => {
             const json = await response.json();
             if (response.ok) {
                 dispatch({ type: 'DELETE_POEM', payload: json });
-                navigate('/myPoetries');
+                navigate('/profilim');
             } else {
                 console.error(json.error);
             }
@@ -119,7 +119,7 @@ export const PoetrySingle = () => {
                 <article id="article-left-down"></article>
             </div>
             <div id="poem-single-content-main">
-                <div id="p-s-h"><p><strong>{poem.title}</strong></p></div>
+                <div id="p-s-h"><h1><strong>{poem.title}</strong></h1></div>
                 <div id="p-s-b">
                     <div id="p-s-b-t">
                         {poem.createdAt && (
@@ -129,7 +129,7 @@ export const PoetrySingle = () => {
                     <div id="p-s-c-poem">
                        <strong>
                             <p>
-                                <Link to={`/viewPoet/${p_user ? p_user._id : '#'}`}>
+                                <Link to={`/sair/${p_user ? p_user._id : '#'}`}>
                                     {p_user ? p_user.name : ''}
                                 </Link>
                             </p>
