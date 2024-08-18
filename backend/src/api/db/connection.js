@@ -2,13 +2,7 @@ const mongoose = require('mongoose');
 
 const connectDB = (url) => {
     try {
-        mongoose.connect(url, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            connectTimeoutMS: 30000, 
-            socketTimeoutMS: 45000,  
-            poolSize: 10            
-        });
+        mongoose.connect(url);
         console.log('DATABASE CONNECTION IS OK!');
     } catch (error) {
         console.error('DATABASE CONNECTION ERROR:', error);
