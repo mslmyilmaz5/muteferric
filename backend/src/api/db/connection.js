@@ -24,6 +24,6 @@ function keepMongoAlive() {
 }
 
 // Her 4 dakikada bir ping göndererek bağlantıyı aktif tut
-setInterval(keepMongoAlive, 4 * 60 * 1000);
+setInterval(keepMongoAlive, 1 * 60 * 1000);
 
 module.exports = connectDB;
