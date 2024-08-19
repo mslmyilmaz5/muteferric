@@ -279,7 +279,7 @@ const Poetry = () => {
           <div id="button-parts">
             <div className="button-new-poetry"><button id="add-new-button" onClick={() => navigate('/yeni-yazi-siir', { state: { type: 'p' } })}> Yeni şiir ekle</button></div>
             <div className="button-new-poetry"><button id="add-new-button" onClick={() => navigate('/yeni-yazi-siir', { state: { type: 'e' } })}> Yeni yazı ekle</button></div>
-            <div className="button-new-poetry"><button id="add-new-button" onClick={() => navigate(`/viewPoet/${user.tokenUser.userId}` )}> Profilini gör</button></div>
+            <div className="button-new-poetry"><button id="add-new-button" onClick={() => navigate(`/sair/${user.tokenUser.userId}` )}> Profilini gör</button></div>
           </div>
         </div>
         <article id="article-right"></article>
