@@ -104,3 +104,64 @@
   grid-column: span 4;
   background: linear-gradient(to top left, #cccaca 50%, transparent 50%);
 }
+
+@media (max-width: 1024px) {
+  .login-page-content {
+    grid-template-columns: repeat(8, 1fr);
+  }
+
+  .article-left, .article-right {
+    grid-column: span 2;
+  }
+
+  .login-from-box {
+    grid-column: span 4;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-page-content {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto auto 1fr auto;
+  }
+
+  .article-left, .article-right {
+    display: none; /* Hide side articles on smaller screens */
+  }
+
+  .login-from-box {
+    grid-column: span 4;
+  }
+
+  .login-from-header p {
+    font-size: 2em;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-page-content {
+    grid-template-columns: 1fr;
+  }
+
+  .navbar-login {
+    grid-column: span 1;
+  }
+
+  .login-from-box {
+    grid-column: span 1;
+    padding: 20px;
+  }
+
+  .login-from-header p {
+    font-size: 1.8em;
+  }
+
+  .submit-button {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .error-bar {
+    font-size: 1.2em;
+  }
+}

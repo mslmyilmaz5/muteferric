@@ -163,3 +163,60 @@
   background: linear-gradient(to top left, #cccaca 50%, transparent 50%);
 }
 
+
+@media (max-width: 1000px) {
+  .poetry-page-content {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    gap: 20px;
+  }
+
+  #p-page-left,
+  #p-page-right,
+  #poetry-page-main-content {
+    grid-template-columns: 1fr;
+  }
+
+  #p-poem-part {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  #p-about-part {
+    grid-template-columns: 1fr;
+  }
+
+  #button-parts {
+    grid-template-columns: 1fr;
+  }
+
+  #p-poem-part1,
+  #p-poem-part2 {
+    border-right: none;
+    border-bottom: 1px solid #cccaca;
+  }
+}
+
+@media (max-width: 1000px) {
+  #p-about-user {
+    padding: 15px;
+  }
+
+  #p-about-user p {
+    font-size: 1em;
+  }
+
+  #p-poem-part-1-head,
+  #p-about-part-1-head {
+    font-size: 1.2em;
+  }
+
+  #poem-h-div {
+    padding: 3px;
+  }
+
+  #d-status,
+  #d-expand {
+    padding: 3px;
+  }
+}

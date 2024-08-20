@@ -4,6 +4,7 @@ import Navbar from '../components/header';
 import { FaExpandAlt, FaGreaterThan, FaLessThan } from "react-icons/fa";
 import '../css/PoetryStatic.css';
 import BASE_URL from '../utils/url';
+import Loading from '../components/loading';
 
 export const PoetryStatic = () => {
   const { user_id } = useParams();
@@ -98,7 +99,7 @@ export const PoetryStatic = () => {
     fetchData();
   }, [user_id]);
 
-  if (!user) return <p>Loading...</p>;
+  if (!user) return <Loading />;
 
   return (
     <div className="poetry-page-content">

@@ -108,7 +108,7 @@ const Poetry = () => {
   }, [dispatch, user]);
 
   if (!user) {
-    return <div>Please log in to view your poems.</div>;
+    return <div>Profilinizi görmek için giriş yapın</div>;
   }
 
 
@@ -254,7 +254,7 @@ const Poetry = () => {
             </div>
           </div>
           <div id="p-about-part-1">
-            <div id="p-about-part-1-head"><p>Yazmak hakkında bir şeyler yaz</p></div>
+            <div id="p-about-part-1-head"><p>Yazmak hakkında yaz</p></div>
             <div id="p-about-part-1-content">
               <textarea
                 className="input-field"

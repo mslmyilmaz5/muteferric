@@ -105,9 +105,7 @@
     font-style: italic;
     text-align: center;
 }
-#check-box-part {
-    
-}
+
 
 .submit-button-poem{
     border:1px solid black;
@@ -117,4 +115,63 @@
 #right-part {
     grid-column: span 3;
     background: linear-gradient(to top left, #cccaca  50%, transparent 50%);
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .create-poem-page {
+        grid-template-columns: 1fr 2fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .create-poem-page {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+    }
+
+    #left-part, #right-part {
+        display: none; /* Hide the left and right parts on small screens */
+    }
+
+    #main-part {
+        grid-column: span 12;
+    }
+
+    #main-part-header p {
+        font-size: 1.5em;
+    }
+
+    #input-field-h {
+        padding: 0.5rem;
+    }
+
+    #form-poem-button-container {
+        grid-template-columns: 1fr;
+        padding-top: 10px;
+    }
+
+    #button-part {
+        justify-content: center;
+        padding-top: 10px;
+    }
+
+    #button-part button {
+        width: 100%; /* Full width button on small screens */
+    }
+}
+
+@media (max-width: 480px) {
+    #main-part-header p {
+        font-size: 1.2em;
+    }
+
+    #input-field-h {
+        padding: 0.25rem;
+    }
+
+    #button-part button {
+        font-size: 0.9em;
+        padding: 6px;
+    }
 }

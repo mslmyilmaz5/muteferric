@@ -11,7 +11,7 @@ body {
     grid-template-columns: 2fr 5fr 2fr;
     grid-template-rows: auto 1fr;
     height: 100vh;
-    padding-right: 5px;
+
     
 }
 
@@ -284,4 +284,70 @@ button {
     margin: 0 10px;
     transition: color 0.3s ease;
 }
+
+
+
+@media screen and (max-width: 1000px) {
+    .home-page-content {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto;
+        padding-right: 0;
+    }
+
+    #leftt-content, 
+    #main-content, 
+    #right-content {
+        grid-column: 1 / -1;
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+
+    #search-bar-content,
+    #main-content-bottom,
+    #bottom-1, 
+    #bottom-2,
+    #right-1, 
+    #right-2 {
+        grid-column: 1 / -1;
+    }
+
+    #some-poet-part {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    #leftt-content, 
+    #main-content, 
+    #right-content {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    #search-bar {
+        width: 100%;
+        padding: 10px;
+    }
+
+    #content-1, #poet-1 {
+        padding: 10px;
+        grid-template-columns: 1fr auto;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    #left1-c, 
+    #bottom-1-content, 
+    #right-1-c {
+        display: contents; /* or simplify content */
+    }
+}
+
+@media screen and (max-width: 100px) {
+    #content-1-button button, #bbutton {
+        padding: 8px;
+        font-size: 0.9em;
+    }
+}
+
 
