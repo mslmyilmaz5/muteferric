@@ -1,58 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/header';
-import { FaExpandAlt, FaGreaterThan, FaLessThan } from "react-icons/fa";
+import { FaExpandAlt } from "react-icons/fa";
 import '../css/PoetryStatic.css';
 import BASE_URL from '../utils/url';
 import Loading from '../components/loading';
+import one from '../assets/img/photo-default.png';
+import { formatDate } from '../utils/garbage';
 
 export const PoetryStatic = () => {
   const { user_id } = useParams();
   const [user, setUser] = useState(null);
   const [poems, setPoems] = useState([]);
   const [aboutOne, setAboutOne] = useState('');
-  const [aboutTwo, setAboutTwo] = useState('');
-  const [currentPoemPage, setCurrentPoemPage] = useState(1);
-  const [currentEssayPage, setCurrentEssayPage] = useState(1);
+  const [profileImage, setProfileImage] = useState('');
+  const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
-  const poemsPerPage = 9;
   const poemsList = poems.filter(poem => poem.type === "p");
   const essaysList = poems.filter(poem => poem.type === "e");
-  const currentPoems = poemsList.slice((currentPoemPage - 1) * poemsPerPage, currentPoemPage * poemsPerPage);
-  const currentEssays = essaysList.slice((currentEssayPage - 1) * poemsPerPage, currentEssayPage * poemsPerPage);
-
-  const handleNextPoemPage = () => {
-    if (currentPoemPage < Math.ceil(poemsList.length / poemsPerPage)) {
-      setCurrentPoemPage(currentPoemPage + 1);
-    }
-  };
-
-  const handlePrevPoemPage = () => {
-    if (currentPoemPage > 1) {
-      setCurrentPoemPage(currentPoemPage - 1);
-    }
-  };
-
-  const handleNextEssayPage = () => {
-    if (currentEssayPage < Math.ceil(essaysList.length / poemsPerPage)) {
-      setCurrentEssayPage(currentEssayPage + 1);
-    }
-  };
-
-  const handlePrevEssayPage = () => {
-    if (currentEssayPage > 1) {
-      setCurrentEssayPage(currentEssayPage - 1);
-    }
-  };
+  const [isImageSelected, setIsImageSelected] = useState(false);
 
   const handleNavigateToPoem = (poem_id) => {
     navigate(`/siir/${poem_id}`);
   };
 
+  const convertToBase64 = (e) => {
+    var render = new FileReader();
+    render.readAsDataURL(e.target.files[0]);
+
+    render.onload = () => {
+      setIsImageSelected(true);
+      setProfileImage(render.result);
+    };
+    render.onerror = error => {
+      console.log("Error:", error);
+    };
+  };
+
+  const uploadImage = async () => {
+    const response = await fetch(`${BASE_URL}/general/uploadImage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ base64: profileImage, userId: user_id}),
+      credentials: 'include'
+    });
+    const json = await response.json();
+
+    if (response.ok) {
+      alert('Fotoğrafın değiştirildi');
+      setIsImageSelected(false);
+    } else {
+      alert('Hata');
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch user data first
         let responseUser = await fetch(`${BASE_URL}/user/${user_id}`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
@@ -73,7 +78,6 @@ export const PoetryStatic = () => {
         if (responseUser.ok) {
           setUser(userData);
           setAboutOne(userData.about_one);
-          setAboutTwo(userData.about_two);
 
           const responsePoems = await fetch(`${BASE_URL}/siir/gorunur-siirler?user_id=${user_id}`, {
             method: 'GET',
@@ -88,145 +92,113 @@ export const PoetryStatic = () => {
           } else {
             console.error(poemsData.error);
           }
+
+          const imageResponse = await fetch(`${BASE_URL}/general/getImage/${user_id}`, {
+            method: 'GET',
+            headers: { 'Authorization': `Bearer ${userData.token}` }, // Used userData.token instead of user.token
+            credentials: 'include'
+          });
+
+          const imageJson = await imageResponse.json();
+          if (imageResponse.ok) {
+            setProfileImage(imageJson ? imageJson.image : one);
+          } else {
+            console.error('Error fetching image:', imageJson.error);
+          }
         } else {
           console.error(userData.error);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, [user_id]);
 
-  if (!user) return <Loading />;
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (!user) {
+    return <div>Error: User not found</div>;
+  }
 
   return (
     <div className="poetry-page-content">
       <div className="navbar-login"><Navbar /></div>
-      
       <div id="p-page-left">
-        <div id="p-about-user">
-          <div className="user-settings-each-h1"><h1><strong>{user.name}</strong></h1></div>
-          <div className="user-settings-each"><p>{user.mahlas}</p></div>
-          <div className="user-settings-each">
-            <p>Paylaşılan toplam şiir ve yazı sayısı: {poems.length}</p>
-          </div>
+        <div id="p-user-photo">
+          <img src={profileImage} alt="LoginPhoto" />
         </div>
-        <article id="article-left"></article>
+        <div id="button-part-st">
+        </div>
       </div>
-
       <div id="poetry-page-main-content">
-        <div id="p-poem-part">
-          <div id="p-poem-part1">
-            <div id="p-poem-part-1-head"><p>Paylaşılan Şiirler</p></div>
-            <div id="p-poem-poem-heads">
-              {currentPoems.slice(0, 4).map(poem => (
-                <div id="poem-h-div" key={poem._id}>
-                  <div id="h-div-title"><p>{poem.title}</p></div>
-                  <div id="h-div-expand-button">
-                    <button onClick={() => handleNavigateToPoem(poem._id)}><FaExpandAlt /></button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div id="p-poem-part2">
-            {currentPoems.slice(4, 9).map(poem => (
-              <div id="poem-h-div" key={poem._id}>
-                <div id="h-div-title"><p>{poem.title}</p></div>
-                <div id="h-div-expand-button">
-                  <button onClick={() => handleNavigateToPoem(poem._id)}><FaExpandAlt /></button>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div id="p-poem-button">
-            <div className="pagination-buttons">
-              <button
-                className="pagination-button"
-                onClick={handlePrevPoemPage}
-                disabled={currentPoemPage === 1}
-              >
-                <FaLessThan />
-              </button>
-              <button
-                className="pagination-button"
-                onClick={handleNextPoemPage}
-                disabled={currentPoemPage >= Math.ceil(poemsList.length / poemsPerPage)}
-              >
-                <FaGreaterThan />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div id="p-poem-part">
-          <div id="p-poem-part1">
-            <div id="p-poem-part-1-head"><p>Paylaşılan Yazılar</p></div>
-            <div id="p-poem-poem-heads">
-              {currentEssays.slice(0, 4).map(essay => (
-                <div id="poem-h-div" key={essay._id}>
-                  <div id="h-div-title"><p>{essay.title}</p></div>
-                  <div id="h-div-expand-button">
-                    <button onClick={() => handleNavigateToPoem(essay._id)}><FaExpandAlt /></button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div id="p-poem-part2">
-            {currentEssays.slice(4, 9).map(essay => (
-              <div id="poem-h-div" key={essay._id}>
-                <div id="h-div-title"><p>{essay.title}</p></div>
-                <div id="h-div-expand-button">
-                  <button onClick={() => handleNavigateToPoem(essay._id)}><FaExpandAlt /></button>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div id="p-poem-button">
-            <div className="pagination-buttons">
-              <button
-                className="pagination-button"
-                onClick={handlePrevEssayPage}
-                disabled={currentEssayPage === 1}
-              >
-                <FaLessThan />
-              </button>
-              <button
-                className="pagination-button"
-                onClick={handleNextEssayPage}
-                disabled={currentEssayPage >= Math.ceil(essaysList.length / poemsPerPage)}
-              >
-                <FaGreaterThan />
-              </button>
-            </div>
-          </div>
-        </div>
-
         <div id="p-about-part">
-          <div id="p-about-part-1-f">
+          <div id="p-user-info-part">
+          {/*   <div id="admin-button">
+                  {!isImageSelected ? (
+                <div className="button-new-poetry">
+                  <input
+                    id="file-input"
+                    accept="image/*"
+                    type="file"
+                    onChange={convertToBase64}
+                    style={{ display: 'none' }}
+                  />
+                  <label htmlFor="file-input" id="upload-button">Fotoğraf Seç</label>
+                </div>
+              ) : (
+                <div className="button-new-poetry">
+                  <button id="add-new-button" onClick={uploadImage}>Fotoğraf yükle</button>
+                </div>
+          )}</div> */}
+            <div id="p-info-name"><p>İsim: <strong>{user.name}</strong></p></div>
+            <div id="p-info-name"><p>Mahlas: <strong>{user.mahlas}</strong> </p></div>
+            <div id="p-info-name"><p>Hesap oluşturma tarihi: <strong>{formatDate(user.createdAt)}</strong> </p> </div>
+            <div id="p-info-name"><p>Paylaşılan Şiir Sayısı: <strong>{poemsList.length}</strong></p> </div>
+            <div id="p-info-name"><p>Paylaşılan Yazı Sayısı: <strong>{essaysList.length}</strong></p> </div>
+          </div>
+          <div id="p-about-part-1">
             <div id="p-about-part-1-head"><p>Hakkında</p></div>
-            <div id="p-about-part-1-content">
+            <div id="p-about-part-1-static-content">
               <p>{aboutOne}</p>
             </div>
           </div>
+        </div>
 
-          <div id="p-about-part-1-f">
-            <div id="p-about-part-1-head"><p>Yazısı Hakkında</p></div>
-            <div id="p-about-part-1-content">
-              <p>{aboutTwo}</p>
+        <div id="p-yazi-part">
+          <div className="c-part" id="p-poem-part">
+            <div id="h-pp">Şiirleri</div>
+            <div id="ccontents0">
+              {poemsList.map((poem) => (
+                <div className="c-part-name" key={poem._id}>
+                  <div id="h-pp-title"><p>{poem.title}</p></div>
+                  <div id="h-pp-button">
+                    <div id="d-expand"><button onClick={() => handleNavigateToPoem(poem._id)}><FaExpandAlt /></button></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="c-part" id="p-poem-part">
+            <div id="h-pp">Yazıları</div>
+            <div id="ccontents">
+              {essaysList.map((essay) => (
+                <div className="c-part-name" key={essay._id}>
+                  <div id="h-pp-title"><p>{essay.title}</p></div>
+                  <div id="h-pp-button">
+                    <div id="d-expand"><button onClick={() => handleNavigateToPoem(essay._id)}><FaExpandAlt /></button></div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
-
-      <article id="article-right"></article>
 
       <div className="footer">
         <p>&copy; 2024 Müteferriç.</p>

@@ -39,11 +39,30 @@ const getDatabaseInfo = async () => {
     return stats;
 };
 
+const updateAboutOne = async (data, user_id) => {
+   
+    if (!mongoose.Types.ObjectId.isValid(user_id)) {
+        throw new Error('No such user');
+    }
+    const {text} = data;
+    const user = await Poet.findOneAndUpdate(
+        { _id: user_id },
+        { about_one: text },
+        { new: true }
+    );
+    
+    if (!user) {
+        throw new Error('No such user');
+    }
+    return user;
+};
+
 module.exports = {
     registerPoet,
     registerPoem,
     getPoet,
     getAllPoets,
     getLastPoets,
-    getDatabaseInfo
+    getDatabaseInfo,
+    updateAboutOne
 };

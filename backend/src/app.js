@@ -19,6 +19,7 @@ const poetryRouter = require("./api/routes/poetryRoute");
 const authRouter = require("./api/routes/authRoute");
 const userRouter = require("./api/routes/userRoute");
 const poetRouter = require("./api/routes/poetRoute");
+const muteferricRouter = require("./api/routes/muteferricRoute");
 
 
 
@@ -31,14 +32,14 @@ const corsOptions = {
 // middleware
 app.use(cors(corsOptions));
 app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 // routes
 app.use('/api/v1/siir', poetryRouter);
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/poet', poetRouter);
+app.use('/api/v1/general', muteferricRouter);
 
 
 const port = process.env.PORT || 5000;

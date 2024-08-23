@@ -19,13 +19,14 @@ const Home = () => {
   const [dbInfoPoet,setDbInfoPoet] = useState(0);
   const [poets, setPoets] = useState([]);
   const [users, setUsers] = useState([]);
+  const [generalInfo, setGeneralInfo] = useState(null);
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [poemsRes, essaysRes, dbInfoRes, poetRes, userRes , dbInfoUserRes, dbInfoPoetRes] = await Promise.all([
+        const [poemsRes, essaysRes, dbInfoRes, poetRes, userRes , dbInfoUserRes, dbInfoPoetRes, muteferricRes] = await Promise.all([
           fetch(`${BASE_URL}/siir/son-yazilar`),
           fetch(`${BASE_URL}/siir/son-siirler`),
           fetch(`${BASE_URL}/siir/database-bilgi`),
@@ -33,6 +34,7 @@ const Home = () => {
           fetch(`${BASE_URL}/user/getLastUsers`),
           fetch(`${BASE_URL}/user/dbinfo`),
           fetch(`${BASE_URL}/poet/dbinfo`),
+          fetch(`${BASE_URL}/general/getGeneralInfo`),
         ]);
 
         if (poemsRes.ok) {
@@ -56,6 +58,9 @@ const Home = () => {
         if (dbInfoPoetRes.ok) {
           setDbInfoPoet(await dbInfoPoetRes.json());
         }
+        if (muteferricRes.ok) {
+          setGeneralInfo(await muteferricRes.json());
+        }
       } catch (err) {
         console.error('Error fetching data:', err);
       }
@@ -63,7 +68,6 @@ const Home = () => {
 
     fetchData();
   }, []);
-
   const handleInputChange = async (e) => {
     const value = e.target.value;
     setQuery(value);
@@ -108,8 +112,7 @@ const Home = () => {
       </div>
       <div id="left-2">
       <div id="left1-b"><p><strong>Günün Köşeşi</strong></p></div>
-      <div id="left-2c"><p>
-      Tarihi galiplerin yazdığı iddiasını yerinde buluyor musunuz? Ben böyle bir iddiayı yerinde bulmamakla kalmadığım gibi yersiz de buluyorum. Her şeyden önce “tarih yazmak” ibaresi yersiz. Dikkatle bakarsak mücrimleri aklamanın bir türüne de tarih dendiğini görürüz. Tarih olarak bildiğimiz ve bildirdiğimiz ne varsa hepsi değilse bile ekseriyeti suçluların elinden çıkmıştır. O suçları işlediğiniz ortaya çıkarsa telâfisi çok pahalıya patlayacak kayıplara uğramanız besbelli olduğu için bir uzlaşma alanında teselli ararsınız. Ne yapıp edip insanlık ortamını size hayat hakkını o suçlar ortaya çıksa bile verecek bir düzene sokarsınız.</p></div>
+      <div id="left-2c"><p> { generalInfo ? generalInfo.today_home_text: ''}</p></div>
       </div>
       </div>
 
@@ -189,7 +192,7 @@ const Home = () => {
                   <div id="content-1" key={essay._id}>
                    
                     <div id="content-1-head">
-                      <p>{essay.title}</p>
+                      <p>{essay.title} </p>
                       <p className="date-right">{formatDate(essay.createdAt)}</p>
                     </div>
                     
@@ -214,7 +217,7 @@ const Home = () => {
       <div id="right-content">
 
         <div id="right-1">
-          <div id="right-1-h"><p>Varan Şairler</p></div>
+          <div id="right-1-h"><p>Varanlar</p></div>
           <div id="right-1-c">
 
             {poets.length > 0 ? (
@@ -239,7 +242,7 @@ const Home = () => {
           </div>
         </div>
         <div id="right-2">
-          <div id="right-1-h"><p>Dolaşan Şairler</p></div>
+          <div id="right-1-h"><p>Dolaşanlar</p></div>
           <div id="right-1-c">
             {users.length > 0 ? (
               users.map((user) => (

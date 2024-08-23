@@ -80,19 +80,19 @@ const searchPoems = async (query) => {
         title: { $regex: `^${query}`, $options: 'i' },
         isVisible: true,
     })
-    .limit(10) // Limit results for performance
+    .limit(3) // Limit results for performance
     .select('_id title'); // Only return _id and title fields
 
     const users = await User.find({
         name: { $regex: `^${query}`, $options: 'i' }
     })
-    .limit(10) // Limit results for performance
+    .limit(3) // Limit results for performance
     .select('_id name'); // Only return _id and name fields
 
     const poets = await Poet.find({
         name: { $regex: `^${query}`, $options: 'i' }
     })
-    .limit(10) // Limit results for performance
+    .limit(3) // Limit results for performance
     .select('_id name'); // Only return _id and name fields
 
     // Combine results and include the type field

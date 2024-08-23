@@ -30,7 +30,6 @@ getPoet = async (req, res) => {
 
 getAllPoets = async (req, res) => {
     try {
-        console.log("Fetching all poets");
         const poets = await poetService.getAllPoets();
         console.log("Fetched poets:", poets); // Log the poets
         res.status(200).json(poets);
@@ -58,11 +57,27 @@ getDatabaseInfo = async (req,res) => {
         res.status(500).json({error: error.message});
     }
 }
+
+// update about_one
+updateAboutOne = async (req,res) => {
+    try {
+        console.log("xx")
+        const { id } = req.params;
+        const user = await poetService.updateAboutOne(req.body,id);
+        console.log("This is update!")
+        res.status(201).json(user);
+    } catch(error) {
+        res.status(500).json({ error: error.message });
+    }
+    
+}
+
 module.exports = {
     registerPoet,
     registerPoem,
     getPoet,
     getAllPoets,
     getLastPoets,
-    getDatabaseInfo
+    getDatabaseInfo,
+    updateAboutOne
 }

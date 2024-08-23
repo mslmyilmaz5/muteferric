@@ -1,17 +1,20 @@
-#p-about-part-1-f {
-    height: 250px;
-    word-wrap: break-word;      /* Allows breaking long words */
-    overflow-wrap: break-word;  /* Ensures long words wrap to the next line */
-    word-break: break-all;      /* Breaks the word at any point if necessary */
-    white-space: normal;        /* Allows text to wrap normally */
-    padding: 10px;              /* Adds padding for better readability */
-    box-sizing: border-box;     /* Ensures padding is included in the element's width/height */
-    max-height: 350px;   
-    border: 1px solid #cccaca;
-    overflow-y: auto;           /* Enables vertical scrolling if content overflows */
+
+#p-about-part-1-static-content
+{
+
+    font-size: 1.0em;
+    font-family: 'Poppins', sans-serif;
+    padding:0px;
+ 
 }
 
-.user-settings-each-h1 {
-    font-size: 1.4em;
-    font-family: 'Poppins', sans-serif; 
+#p-page-left
+{
+    grid-template-rows: auto 1fr;
+  
+
+}
+#button-part-st {
+    background-color: #cccaca;
+    clip-path: polygon(48% 35%, 100% 0, 100% 60%, 100% 100%, 0 100%, 0% 60%, 0 0); 
 }
