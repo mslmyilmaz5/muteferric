@@ -4,7 +4,7 @@
 
     font-size: 1.0em;
     font-family: 'Poppins', sans-serif;
-    padding:0px;
+    padding:10px;
  
 }
 
@@ -15,6 +15,16 @@
 
 }
 #button-part-st {
-    background-color: #cccaca;
-    clip-path: polygon(48% 35%, 100% 0, 100% 60%, 100% 100%, 0 100%, 0% 60%, 0 0); 
+   
+    
 }
+
+.empty-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; /* Adjust the height based on your design */
+    font-size: 16px;
+    color: #666;
+    text-align: center;
+  }

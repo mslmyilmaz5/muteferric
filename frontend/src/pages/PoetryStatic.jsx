@@ -42,7 +42,7 @@ export const PoetryStatic = () => {
     const response = await fetch(`${BASE_URL}/general/uploadImage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ base64: profileImage, userId: user_id}),
+      body: JSON.stringify({ base64: profileImage, userId: user_id }),
       credentials: 'include'
     });
     const json = await response.json();
@@ -95,7 +95,7 @@ export const PoetryStatic = () => {
 
           const imageResponse = await fetch(`${BASE_URL}/general/getImage/${user_id}`, {
             method: 'GET',
-            headers: { 'Authorization': `Bearer ${userData.token}` }, // Used userData.token instead of user.token
+            headers: { 'Authorization': `Bearer ${userData.token}` },
             credentials: 'include'
           });
 
@@ -133,68 +133,61 @@ export const PoetryStatic = () => {
         <div id="p-user-photo">
           <img src={profileImage} alt="LoginPhoto" />
         </div>
-        <div id="button-part-st">
-        </div>
       </div>
       <div id="poetry-page-main-content">
         <div id="p-about-part">
           <div id="p-user-info-part">
-          {/*   <div id="admin-button">
-                  {!isImageSelected ? (
-                <div className="button-new-poetry">
-                  <input
-                    id="file-input"
-                    accept="image/*"
-                    type="file"
-                    onChange={convertToBase64}
-                    style={{ display: 'none' }}
-                  />
-                  <label htmlFor="file-input" id="upload-button">Fotoğraf Seç</label>
-                </div>
-              ) : (
-                <div className="button-new-poetry">
-                  <button id="add-new-button" onClick={uploadImage}>Fotoğraf yükle</button>
-                </div>
-          )}</div> */}
             <div id="p-info-name"><p>İsim: <strong>{user.name}</strong></p></div>
-            <div id="p-info-name"><p>Mahlas: <strong>{user.mahlas}</strong> </p></div>
-            <div id="p-info-name"><p>Hesap oluşturma tarihi: <strong>{formatDate(user.createdAt)}</strong> </p> </div>
-            <div id="p-info-name"><p>Paylaşılan Şiir Sayısı: <strong>{poemsList.length}</strong></p> </div>
-            <div id="p-info-name"><p>Paylaşılan Yazı Sayısı: <strong>{essaysList.length}</strong></p> </div>
+            <div id="p-info-name"><p>Mahlas: <strong>{user.mahlas}</strong></p></div>
+            <div id="p-info-name"><p>Hesap oluşturma tarihi: <strong>{formatDate(user.createdAt)}</strong></p></div>
+            <div id="p-info-name"><p>Paylaşılan Şiir Sayısı: <strong>{poemsList.length}</strong></p></div>
+            <div id="p-info-name"><p>Paylaşılan Yazı Sayısı: <strong>{essaysList.length}</strong></p></div>
           </div>
           <div id="p-about-part-1">
-            <div id="p-about-part-1-head"><p>Hakkında</p></div>
+            <div id="p-about-part-1-head"><p><strong>Hakkında</strong></p></div>
             <div id="p-about-part-1-static-content">
-              <p>{aboutOne}</p>
+              {aboutOne.length > 0 ? (
+                <p>{aboutOne}</p>
+              ) : (
+                <div className="empty-message"><p>Hakkında kısmı eklenmedi</p></div>
+              )}
             </div>
           </div>
         </div>
 
         <div id="p-yazi-part">
           <div className="c-part" id="p-poem-part">
-            <div id="h-pp">Şiirleri</div>
+            <div id="h-pp"><strong>Şiirleri</strong></div>
             <div id="ccontents0">
-              {poemsList.map((poem) => (
-                <div className="c-part-name" key={poem._id}>
-                  <div id="h-pp-title"><p>{poem.title}</p></div>
-                  <div id="h-pp-button">
-                    <div id="d-expand"><button onClick={() => handleNavigateToPoem(poem._id)}><FaExpandAlt /></button></div>
+              {poemsList.length > 0 ? (
+                poemsList.map((poem) => (
+                  <div className="c-part-name" key={poem._id}>
+                    <div id="h-pp-title"><p>{poem.title}</p></div>
+                    <div id="h-pp-button">
+                      <div id="d-expand"><button onClick={() => handleNavigateToPoem(poem._id)}><FaExpandAlt /></button></div>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <div className="empty-message"><p>Henüz eklenen şiir yok</p></div>
+              )}
             </div>
           </div>
           <div className="c-part" id="p-poem-part">
-            <div id="h-pp">Yazıları</div>
+            <div id="h-pp"><strong>Yazıları</strong></div>
             <div id="ccontents">
-              {essaysList.map((essay) => (
-                <div className="c-part-name" key={essay._id}>
-                  <div id="h-pp-title"><p>{essay.title}</p></div>
-                  <div id="h-pp-button">
-                    <div id="d-expand"><button onClick={() => handleNavigateToPoem(essay._id)}><FaExpandAlt /></button></div>
+              {essaysList.length > 0 ? (
+                essaysList.map((essay) => (
+                  <div className="c-part-name" key={essay._id}>
+                    <div id="h-pp-title"><p>{essay.title}</p></div>
+                    <div id="h-pp-button">
+                      <div id="d-expand"><button onClick={() => handleNavigateToPoem(essay._id)}><FaExpandAlt /></button></div>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <div className="empty-message"><p>Henüz eklenen yazı yok</p></div>
+              )}
             </div>
           </div>
         </div>

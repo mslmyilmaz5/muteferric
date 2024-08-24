@@ -192,7 +192,7 @@ const Poetry = () => {
 
         <div id="p-yazi-part">
           <div className="c-part" id="p-poem-part">
-            <div id="h-pp">Şiirlerin</div>
+            <div id="h-pp"><strong>Şiirlerin</strong></div>
             <div id="ccontents0">
               {poemsList.map((poem) => (
                 <div className="c-part-name" key={poem._id}>
@@ -206,7 +206,7 @@ const Poetry = () => {
             </div>
           </div>
           <div className="c-part" id="p-poem-part">
-            <div id="h-pp">Yazıların</div>
+            <div id="h-pp"><strong>Yazıların</strong></div>
             <div id="ccontents0">
               {essaysList.map((poem) => (
                 <div className="c-part-name" key={poem._id}>
