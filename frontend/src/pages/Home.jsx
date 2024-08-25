@@ -15,8 +15,8 @@ const Home = () => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [dbInfo, setDbInfo] = useState(0);
-  const [dbInfoUser,setDbInfoUser] = useState(0);
-  const [dbInfoPoet,setDbInfoPoet] = useState(0);
+  const [dbInfoUser, setDbInfoUser] = useState(0);
+  const [dbInfoPoet, setDbInfoPoet] = useState(0);
   const [poets, setPoets] = useState([]);
   const [users, setUsers] = useState([]);
   const [generalInfo, setGeneralInfo] = useState(null);
@@ -26,7 +26,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [poemsRes, essaysRes, dbInfoRes, poetRes, userRes , dbInfoUserRes, dbInfoPoetRes, muteferricRes] = await Promise.all([
+        const [poemsRes, essaysRes, dbInfoRes, poetRes, userRes, dbInfoUserRes, dbInfoPoetRes, muteferricRes] = await Promise.all([
           fetch(`${BASE_URL}/siir/son-yazilar`),
           fetch(`${BASE_URL}/siir/son-siirler`),
           fetch(`${BASE_URL}/siir/database-bilgi`),
@@ -97,29 +97,29 @@ const Home = () => {
   return (
     <div className="home-page-content">
       <div className="navbar-login">
-  
+
         <Navbar />
       </div>
       <div id="leftt-content">
-      <div id="left-1">
-        { user ? <div id="left1-b"><p> Hoşgeldin <strong>{user.tokenUser.name}</strong></p></div>
-        : <div id="left1-b"><p> Sen de kayıt olup hemen dolaşanların arasına katıl!</p></div>}
-        <div id="left1-c"><p> Müteferriç'te toplam</p></div>
-        
-        <div id="left1-c"><p> <strong>{dbInfoUser} </strong>dolaşan</p></div>
-        <div id="left1-c"><p> <strong>{dbInfoPoet} </strong> varan</p></div>
-        <div id="left1-c"><p> <strong>{dbInfo} </strong>yazı ve şiir</p></div>
-      </div>
-      <div id="left-2">
-      <div id="left1-b"><p><strong>Günün Köşeşi</strong></p></div>
-      <div id="left-2c"><p> { generalInfo ? generalInfo.today_home_text: ''}</p></div>
-      </div>
+        <div id="left-1">
+          {user ? <div id="left1-b"><p> Hoşgeldin <strong>{user.tokenUser.name}</strong></p></div>
+            : <div id="left1-b"><p> Sen de kayıt olup hemen dolaşanların arasına katıl!</p></div>}
+          <div id="left1-c"><p> Müteferriç'te toplam</p></div>
+
+          <div id="left1-c"><p> <strong>{dbInfoUser} </strong>dolaşan</p></div>
+          <div id="left1-c"><p> <strong>{dbInfoPoet} </strong> varan</p></div>
+          <div id="left1-c"><p> <strong>{dbInfo} </strong>yazı ve şiir</p></div>
+        </div>
+        <div id="left-2">
+          <div id="left1-b"><p><strong>Günün Köşeşi</strong></p></div>
+          <div id="left-2c"><p> {generalInfo ? generalInfo.today_home_text : ''}</p></div>
+        </div>
       </div>
 
       <div id="main-content">
         <div id="search-bar-content">
           <div id="title-search">
-            <p>Müteferriç'de ara!</p>
+            <p><strong>Müteferriç'de ara!</strong></p>
           </div>
           <div id="search-bar-div">
             <input
@@ -132,23 +132,16 @@ const Home = () => {
           </div>
           <div id="some-poet-part">
             {results.map((result) => (
-              <div id="poet-1" key={result._id}>
-                <p>{result.title}</p>
-                <div id="poet-1-b">
-                <button
-                  id="bbutton"
-                  onClick={() => {
-                    if (result.type === 'poem') {
-                      handleNavigateToPoem(result._id);
-                    } else {
-                      handleNavigateToPoet(result._id);
-                    }
-                  }}
-                >
-                  <MdOutlineReadMore />
-                </button>    
-                </div>
-                           
+              <div id="poet-1" key={result._id}
+                onClick={() => {
+                  if (result.type === 'poem') {
+                    handleNavigateToPoem(result._id);
+                  } else {
+                    handleNavigateToPoet(result._id);
+                  }
+                }}
+                style={{ cursor: 'pointer' }} >
+                <p>{result.title} </p>
               </div>
             ))}
           </div>
@@ -156,23 +149,20 @@ const Home = () => {
         <div id="main-content-bottom">
           <div id="bottom-1">
             <div id="bottom-1-head">
-              <p>Son eklenen şiirler</p>
+              <p><strong>Son eklenen şiirler</strong></p>
             </div>
             <div id="bottom-1-content">
               {poems.length > 0 ? (
                 poems.map((poem) => (
-                  <div id="content-1" key={poem._id}>
+                  <div
+                    id="content-1"
+                    key={poem._id}
+                    onClick={() => handleNavigateToPoem(poem._id)}
+                    style={{ cursor: 'pointer' }} // Tıklanabilir olduğunu belirtmek için cursor stilini değiştirdik
+                  >
                     <div id="content-1-head">
                       <p>{poem.title}</p>
                       <p className="date-right">{formatDate(poem.createdAt)}</p>
-                    </div>
-                    <div id="content-1-button">
-                      <button
-                        id="ar-small-button"
-                        onClick={() => handleNavigateToPoem(poem._id)}
-                      >
-                        <MdOutlineReadMore />
-                      </button>
                     </div>
                   </div>
                 ))
@@ -184,25 +174,18 @@ const Home = () => {
 
           <div id="bottom-1">
             <div id="bottom-1-head">
-              <p>Son eklenen yazılar</p>
+              <p><strong>Son eklenen yazılar</strong></p>
             </div>
             <div id="bottom-1-content">
               {essays.length > 0 ? (
                 essays.map((essay) => (
-                  <div id="content-1" key={essay._id}>
-                   
+                  <div id="content-1"
+                    key={essay._id}
+                    onClick={() => handleNavigateToPoem(essay._id)}
+                    style={{ cursor: 'pointer' }} >
                     <div id="content-1-head">
                       <p>{essay.title} </p>
                       <p className="date-right">{formatDate(essay.createdAt)}</p>
-                    </div>
-                    
-                    <div id="content-1-button">
-                      <button
-                        id="ar-small-button"
-                        onClick={() => handleNavigateToPoem(essay._id)}
-                      >
-                        <MdOutlineReadMore />
-                      </button>
                     </div>
                   </div>
                 ))
@@ -217,22 +200,16 @@ const Home = () => {
       <div id="right-content">
 
         <div id="right-1">
-          <div id="right-1-h"><p>Varanlar</p></div>
+          <div id="right-1-h"><p><strong>Varanlar</strong></p></div>
           <div id="right-1-c">
-
             {poets.length > 0 ? (
               poets.map((poet) => (
-                <div id="content-1" key={poet._id}>
+                <div id="content-1"
+                  key={poet._id}
+                  onClick={() => handleNavigateToPoet(poet._id)}
+                  style={{ cursor: 'pointer' }} >
                   <div id="content-1-head">
                     <p>{poet.name}</p>
-                  </div>
-                  <div id="content-1-button">
-                    <button
-                      id="ar-small-button"
-                      onClick={() => handleNavigateToPoet(poet._id)}
-                    >
-                      <MdOutlineReadMore />
-                    </button>
                   </div>
                 </div>
               ))
@@ -242,22 +219,17 @@ const Home = () => {
           </div>
         </div>
         <div id="right-2">
-          <div id="right-1-h"><p>Dolaşanlar</p></div>
+          <div id="right-1-h"><p><strong>Dolaşanlar</strong></p></div>
           <div id="right-1-c">
             {users.length > 0 ? (
               users.map((user) => (
-                <div id="content-1" key={user._id}>
+                <div id="content-1" key={user._id}
+                  onClick={() => handleNavigateToPoet(user._id)}
+                  style={{ cursor: 'pointer' }} >
                   <div id="content-1-head">
                     <p>{user.name}</p>
                   </div>
-                  <div id="content-1-button">
-                    <button
-                      id="ar-small-button"
-                      onClick={() => handleNavigateToPoet(user._id)}
-                    >
-                      <MdOutlineReadMore />
-                    </button>
-                  </div>
+
                 </div>
               ))
             ) : (

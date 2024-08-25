@@ -55,6 +55,8 @@ export const CreatePoem = () => {
   
     return result;
   };
+
+
   
   const ptags = setPtags(type); // Make sure type is defined or passed as a prop
   return (
@@ -67,6 +69,7 @@ export const CreatePoem = () => {
         <div id="main-part-header">
           <p>{ptags[0]}</p>
         </div>
+        
         <div id="main-part-form">
           <div id="form-head-input">
             <input

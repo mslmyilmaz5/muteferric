@@ -140,10 +140,10 @@ body {
 }
 
 #some-poet-part {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    
+
     gap: 10px;
-    grid-template-rows: repeat(5, 1fr);
+    overflow-y: auto;
 }
 
 
@@ -180,14 +180,20 @@ body {
 }
 
 #content-1,#poet-1 {
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    border-bottom: 1px solid #ddd;
+  
     padding: 10px;
     display: grid;
     grid-template-columns: 1fr auto;
     margin-bottom: 10px;
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
+
+#content-1 p, #poet-1 p
+{
+    font-size: 1.2em;
+}
+
 
 #content-1:hover {
     transform: translateY(-5px);
@@ -198,6 +204,7 @@ body {
     justify-content: space-between;
     display: flex;
     align-items: center;
+    
 }
 
 #poet-1-b {

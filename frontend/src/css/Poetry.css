@@ -105,6 +105,11 @@
 }
 
 
+.input-field{
+  border: none; /* Sınırları tamamen kaldır */
+  outline: none; /* Odaklanıldığında görünen sınırı da kaldır */
+}
+
 #h-pp-button
 {
   display: grid;

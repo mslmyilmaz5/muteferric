@@ -9,8 +9,8 @@ import Navbar from '../components/header';
 import Loading from '../components/loading';
 import { Link } from 'react-router-dom';
 import BASE_URL from '../utils/url';
-import {formatDate} from '../utils/garbage';
-
+import { formatDate } from '../utils/garbage';
+import one from '../assets/img/photo-default.png';
 export const PoetrySingle = () => {
     const { poem_id } = useParams();
     const { user } = useAuthContext();
@@ -19,15 +19,16 @@ export const PoetrySingle = () => {
     const [poem, setPoem] = useState(null);
     const [p_user, setUser] = useState(null);
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+    const [profileImage, setProfileImage] = useState('');
 
     const checkIfUserPoem = (poem, user) => {
         return (user && (user.tokenUser.userId === poem.userId || user.tokenUser.userType === "A"));
     };
 
+
     useEffect(() => {
         const fetchPoem = async () => {
             try {
-                // Fetch the poem data
                 const response = await fetch(`${BASE_URL}/siir/${poem_id}`, {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
@@ -38,7 +39,6 @@ export const PoetrySingle = () => {
                 if (response.ok) {
                     setPoem(json);
 
-                    // Try fetching user data from the primary endpoint
                     let userResponse = await fetch(`${BASE_URL}/user/${json.userId}`, {
                         method: 'GET',
                         headers: { 'Content-Type': 'application/json' },
@@ -46,7 +46,6 @@ export const PoetrySingle = () => {
                     });
                     let userJson = await userResponse.json();
 
-                    // If user data is not found, try the fallback endpoint
                     if (!userJson) {
                         userResponse = await fetch(`${BASE_URL}/poet/${json.userId}`, {
                             method: 'GET',
@@ -61,6 +60,25 @@ export const PoetrySingle = () => {
                     } else {
                         console.error(userJson.error);
                     }
+
+                    // Fetch profile image after poem is loaded
+                    const fetchProfileImage = async () => {
+                        try {
+                            const imageResponse = await fetch(`${BASE_URL}/general/getImage/${json.userId}`, {
+                                method: 'GET',
+                                headers: { 'Authorization': `Bearer ${user.token}` },
+                                credentials: 'include'
+                            });
+                            const imageJson = await imageResponse.json();
+                            if (imageResponse.ok) {
+                                setProfileImage(imageJson ? imageJson.image : one);
+                            }
+                        } catch (error) {
+                            console.error('Error fetching profile image:', error);
+                        }
+                    };
+
+                    fetchProfileImage();
                 } else {
                     console.error(json.error);
                 }
@@ -71,7 +89,7 @@ export const PoetrySingle = () => {
 
         fetchPoem();
     }, [poem_id]);
-
+    
     const handleUpdate = (title, poetry, visibility, isUpdated, poemId, poemType) => {
         navigate('/yeni-yazi-siir', {
             state: {
@@ -84,7 +102,6 @@ export const PoetrySingle = () => {
             },
         });
     };
-
 
 
     const handleDeleteClick = async () => {
@@ -112,75 +129,140 @@ export const PoetrySingle = () => {
     }
 
     return (
+
         <div className="poem-single-content-page">
             <div className="navbar-login"><Navbar /></div>
-            <div id="lleft">
-                <article id="article-left-up"></article>
-                <article id="article-left-down"></article>
-            </div>
-            <div id="poem-single-content-main">
-                <div id="p-s-h"><h1><strong>{poem.title}</strong></h1></div>
-                <div id="p-s-b">
-                    <div id="p-s-b-t">
-                        {poem.createdAt && (
-                            <p><strong>{formatDate(poem.createdAt)}</strong></p>
-                        )}
+            <div id="left"></div>
+            <div id="content">
+                <div id="ct-header">
+                    <div id="ct-header-photo">
+                        <img src={profileImage} alt="" />
+
                     </div>
-                    <div id="p-s-c-poem">
-                       <strong>
-                            <p>
-                                <Link to={`/sair/${p_user ? p_user._id : '#'}`}>
-                                    {p_user ? p_user.name : ''}
-                                </Link>
-                            </p>
-                        </strong>
-                    </div>
-                    {checkIfUserPoem(poem, user) && (
-                        <div id="p-s-b-b">
-                            <button
-                                className="arr-small-button"
-                                onClick={() => handleUpdate(poem.title, poem.poetry, poem.isVisible, true, poem._id, poem.type)}
-                            >
-                                <GrUpdate />
-                            </button>
-                            <button
-                                className="arr-small-button"
-                                onClick={() => setShowConfirmDialog(true)}
-                            >
-                                <MdDelete />
-                            </button>
+                    <div id="ct-header-title">
+                        <div class="ct-header-title-head">
+                            <p><strong>{poem.title}</strong></p>
                         </div>
-                    )}
+                        <div class="ct-header-title-head" id="poet">
+                            <p><Link to={`/sair/${p_user ? p_user._id : '#'}`}>
+                                {p_user ? p_user.name : ''}
+                            </Link></p>
+
+                            <div id="div-buttons">
+                            {checkIfUserPoem(poem, user) && (
+                                <div id="div-buttons">
+                                    <button
+                                        className="arr-small-button"
+                                        onClick={() => handleUpdate(poem.title, poem.poetry, poem.isVisible, true, poem._id, poem.type)}
+                                    >
+                                        <GrUpdate />
+                                    </button>
+                                    <button
+                                        className="arr-small-button"
+                                        onClick={() => setShowConfirmDialog(true)}
+                                    >
+                                        <MdDelete />
+                                    </button>
+
+                                </div>)}
+                            </div>
+                        </div>
+                        <div class="ct-header-title-head" id="date"><p>{formatDate(poem.createdAt)}</p></div>
+
+                    </div>
                 </div>
-                {poem.type === "p" && (
-                    <div id="p-s-c-p">
-                        <p dangerouslySetInnerHTML={{ __html: poem.poetry.replace(/\n/g, '<br />') }}></p>
-                    </div>
-                )}
-                {poem.type === "e" && (
-                    <div id="p-s-c-e">
-                        <p dangerouslySetInnerHTML={{ __html: poem.poetry.replace(/\n/g, '<br />') }}></p>
-                    </div>
-                )}
+                <div id="ct-text">
+                    <p dangerouslySetInnerHTML={{ __html: poem.poetry.replace(/\n/g, '<br />') }}></p>
+                </div>
+
             </div>
-            <div id="rright">
-                <article id="article-right-up"></article>
-                <article id="article-right-down"></article>
-            </div>
+            <div id="right"></div>
+
             <div className="footer">
                 <p>&copy; 2024 Müteferriç.</p>
             </div>
             {showConfirmDialog && (
-                <div className="confirm-dialog">
-                    <p>Silmek istediğine emin misin?</p>
-                    <div className="confirm-dialog-buttons">
-                        <button onClick={handleDeleteClick}>Evet</button>
-                        <button onClick={() => setShowConfirmDialog(false)}>Hayır</button>
-                    </div>
-                </div>
-            )}
+             <div className="confirm-dialog">
+                 <p>Silmek istediğine emin misin?</p>
+                 <div className="confirm-dialog-buttons">
+                     <button onClick={handleDeleteClick}>Evet</button>
+                     <button onClick={() => setShowConfirmDialog(false)}>Hayır</button>
+                 </div>
+             </div>
+         )}
         </div>
+
     );
 };
 
 export default PoetrySingle;
+
+
+/*  <div className="poem-single-content-page">
+         <div className="navbar-login"><Navbar /></div>
+         <div id="lleft">
+             <article id="article-left-up"></article>
+             <article id="article-left-down"></article>
+         </div>
+         <div id="poem-single-content-main">
+             <div id="p-s-h"><h1><strong>{poem.title}</strong></h1></div>
+             <div id="p-s-b">
+                 <div id="p-s-b-t">
+                     {poem.createdAt && (
+                         <p><strong>{formatDate(poem.createdAt)}</strong></p>
+                     )}
+                 </div>
+                 <div id="p-s-c-poem">
+                    <strong>
+                         <p>
+                             <Link to={`/sair/${p_user ? p_user._id : '#'}`}>
+                                 {p_user ? p_user.name : ''}
+                             </Link>
+                         </p>
+                     </strong>
+                 </div>
+                 {checkIfUserPoem(poem, user) && (
+                     <div id="p-s-b-b">
+                         <button
+                             className="arr-small-button"
+                             onClick={() => handleUpdate(poem.title, poem.poetry, poem.isVisible, true, poem._id, poem.type)}
+                         >
+                             <GrUpdate />
+                         </button>
+                         <button
+                             className="arr-small-button"
+                             onClick={() => setShowConfirmDialog(true)}
+                         >
+                             <MdDelete />
+                         </button>
+                     </div>
+                 )}
+             </div>
+             {poem.type === "p" && (
+                 <div id="p-s-c-p">
+                     <p dangerouslySetInnerHTML={{ __html: poem.poetry.replace(/\n/g, '<br />') }}></p>
+                 </div>
+             )}
+             {poem.type === "e" && (
+                 <div id="p-s-c-e">
+                     <p dangerouslySetInnerHTML={{ __html: poem.poetry.replace(/\n/g, '<br />') }}></p>
+                 </div>
+             )}
+         </div>
+         <div id="rright">
+             <article id="article-right-up"></article>
+             <article id="article-right-down"></article>
+         </div>
+         <div className="footer">
+             <p>&copy; 2024 Müteferriç.</p>
+         </div>
+         {showConfirmDialog && (
+             <div className="confirm-dialog">
+                 <p>Silmek istediğine emin misin?</p>
+                 <div className="confirm-dialog-buttons">
+                     <button onClick={handleDeleteClick}>Evet</button>
+                     <button onClick={() => setShowConfirmDialog(false)}>Hayır</button>
+                 </div>
+             </div>
+         )}
+     </div> */
