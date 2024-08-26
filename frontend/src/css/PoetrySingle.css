@@ -243,13 +243,16 @@
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 350px) {
   #ct-header {
     grid-template-columns: 1fr; /* Stacks the image and text vertically */
     text-align: center;
   }
 
   #ct-header-photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 80px;
     height: 80px;
   }
