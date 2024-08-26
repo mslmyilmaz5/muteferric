@@ -37,14 +37,14 @@ body {
 #left1-b {
     font-size: 1.3em;
     padding: 10px;
-    border-bottom: 1px solid #cccaca;
+    border: 1px solid #cccaca;
     text-align: center;
 }
 
 #left1-c {
     font-size: 1.2em;
     text-align: center;
-  
+    padding:5px;
 }
 
 #left-2c {
@@ -52,12 +52,14 @@ body {
     padding: 20px;
     overflow-y: auto;
     max-height: 700px;
+    
 }
 
 
 #left-2 {
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
 }
 
 #user-info {
@@ -140,8 +142,6 @@ body {
 }
 
 #some-poet-part {
-    
-
     gap: 10px;
     overflow-y: auto;
 }
@@ -170,7 +170,7 @@ body {
 
 #bottom-1-head {
     padding: 10px;
-  
+    border:1px solid #cccaca;
     text-align: center;
     font-size: 1.2em;
 }
@@ -236,11 +236,13 @@ body {
     gap: 20px;
     padding: 20px;
     color:black;
+    
 }
 #right-1{
     grid-template-rows: auto 1fr;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding:10px;
 }
 
 #right-1-h {
@@ -248,6 +250,7 @@ body {
     justify-content: center;
     padding: 10px;
     font-size: 1.2em;
+    border:1px solid #cccaca;
 }
 
 #right-1-c {
@@ -258,6 +261,7 @@ body {
 #right-2{
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding:10px;
 }
 
 

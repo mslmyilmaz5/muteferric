@@ -11,6 +11,7 @@ const Admin = () => {
         name: '',
         about_one: '',
         user_type: 'VP',
+        profileImage: '', // Added for profile image
     });
 
     const [poem, setPoem] = useState({
@@ -25,6 +26,40 @@ const Admin = () => {
     const [selectedPoet, setSelectedPoet] = useState('');
     const [updatedAboutOne, setUpdatedAboutOne] = useState('');
     const [todayHomeText, setTodayHomeText] = useState('');
+    const [isImageSelected, setIsImageSelected] = useState(false);
+    const [profileImage, setProfileImage] = useState('');
+
+    const convertToBase64 = (e) => {
+        var render = new FileReader();
+        render.readAsDataURL(e.target.files[0]);
+
+        render.onload = () => {
+            setIsImageSelected(true);
+            setProfileImage(render.result);
+        };
+        render.onerror = error => {
+            console.log("Error:", error);
+        };
+    };
+
+    const uploadImage = async (userId) => {
+        if (!profileImage || !userId) return; // Add checks to avoid errors
+
+        const response = await fetch(`${BASE_URL}/general/uploadImage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ base64: profileImage, userId: userId }),
+            credentials: 'include'
+        });
+        const json = await response.json();
+
+        if (response.ok) {
+            alert('Photo updated successfully');
+            setIsImageSelected(false);
+        } else {
+            alert('Error updating photo');
+        }
+    };
 
     useEffect(() => {
         const fetchPoets = async () => {
@@ -33,8 +68,8 @@ const Admin = () => {
                     method: 'GET',
                     credentials: 'include',
                 });
-                const data = await response.json(); 
-                setPoets(data); 
+                const data = await response.json();
+                setPoets(data);
             } catch (error) {
                 console.error('There was an error fetching the poets!', error);
             }
@@ -62,8 +97,10 @@ const Admin = () => {
     const handlePoetSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(`${BASE_URL}/poet/registerPoet`, poet);
+            const response = await axios.post(`${BASE_URL}/poet/registerPoet`, poet);
             alert('Poet registered successfully!');
+            console.log(response.data)
+            await uploadImage(response.data._id); // Assume response contains userId
         } catch (error) {
             console.error('There was an error registering the poet!', error);
         }
@@ -82,7 +119,6 @@ const Admin = () => {
     const handleAboutOneUpdate = async (e) => {
         e.preventDefault();
         try {
-           
             await axios.put(`${BASE_URL}/poet/update/aboutOne/${selectedPoet}`, { text: updatedAboutOne });
             alert('About One updated successfully!');
         } catch (error) {
@@ -132,6 +168,15 @@ const Admin = () => {
                                     onChange={handlePoetChange}
                                     required
                                 />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="profileImage">Profile Image</label>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={convertToBase64}
+                                />
+                                {isImageSelected && <p>Image selected, ready to upload.</p>}
                             </div>
                             <button type="submit" className="submit-button">Register Poet</button>
                         </form>
@@ -217,7 +262,7 @@ const Admin = () => {
                                 </select>
                             </div>
                             <div className="form-group">
-                                <label htmlFor="updatedAboutOne">New About (Part 1)</label>
+                                <label htmlFor="updatedAboutOne">Updated About One</label>
                                 <textarea
                                     name="updatedAboutOne"
                                     value={updatedAboutOne}
@@ -229,12 +274,11 @@ const Admin = () => {
                         </form>
                     </div>
 
-
                     <div className="form-container">
-                        <h2 className="form-title">Update Today's Home Text</h2>
+                        <h2 className="form-title">Update Home Text</h2>
                         <form onSubmit={handleUpdateHomeText}>
                             <div className="form-group">
-                                <label htmlFor="todayHomeText">Today's Home Text</label>
+                                <label htmlFor="todayHomeText">Home Text</label>
                                 <textarea
                                     name="todayHomeText"
                                     value={todayHomeText}
@@ -247,7 +291,7 @@ const Admin = () => {
                     </div>
                 </>
             ) : (
-                <div>Ne olursan ol ama admin olmadan gelme buraya!</div>
+                <div className="no-access">You do not have access to this page.</div>
             )}
         </div>
     );

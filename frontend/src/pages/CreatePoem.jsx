@@ -46,7 +46,7 @@ export const CreatePoem = () => {
     const result = [];
   
     if (type === "p") {
-      result[0] = "\"Şiir hassastır. Öyle üstün körü yazmaya gelmez. İyice ölçüp tarttıktan sonra diziceksin kelimeleri.Sonunu uyduracağım diye hakikati incitmeyeceksin.\""
+      result[0] = "\"Şiir hassastır. Öyle üstün körü yazmaya gelmez. İyice ölçüp tarttıktan sonra dizeceksin kelimeleri. Sonunu uyduracağım diye hakikati incitmeyeceksin.\""
   
     } else if (type === "e") {
       result[0] = "\"Alim unutmuş, kalem unutmamış.\"";
@@ -85,7 +85,7 @@ export const CreatePoem = () => {
             <textarea
               className="input-field"
               rows="28"
-              placeholder="............."
+           
               onChange={(e) => setPoetry(e.target.value)}
               value={poetry}
             />

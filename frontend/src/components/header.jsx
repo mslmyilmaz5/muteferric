@@ -31,12 +31,8 @@ const Navbar = () => {
         </div>
         <div id="nav-links" className={menuOpen ? 'open' : ''}>
           <Link to="/hakkimizda">Hakkımızda</Link>
-          <Link to="/varanlar">Varanlar</Link>
-          <Link to="/dolasanlar">Dolaşanlar</Link>
           {user && <Link to="/profilim">Profilim</Link>}
-        </div>
-      </div>
-      <div className="header-buttons">
+          <div className="header-buttons">
         {user ? (
           <button className="header-button" onClick={handleClick}>Çıkış yap</button>
         ) : (
@@ -46,6 +42,9 @@ const Navbar = () => {
           </>
         )}
       </div>
+        </div>
+      </div>
+      
     </header>
   );
 }

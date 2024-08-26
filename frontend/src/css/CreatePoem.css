@@ -7,7 +7,7 @@
 
 #left-part {
     grid-column: span 3;
-    background: linear-gradient(to top right, #cccaca  50%, transparent 50%);
+    background: #eaeaea
 }
 
 #main-part {
@@ -21,6 +21,8 @@
     display: flex;
     flex-direction: column;
     grid-template-rows: auto auto auto;
+    padding-left: 50px;
+    padding-right: 50px;
 
 }
 
@@ -28,9 +30,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 15px;
-
-    
 }
 
 #form-poem-input {
@@ -42,8 +41,8 @@
 
 #input-field-h {
     border: 1px solid black;
-    border-radius: 0.25rem;
-    padding: 0.25rem;
+ 
+    padding: 10px;
 }
 
 #form-poem-button-container {
@@ -62,7 +61,6 @@
 }
 
 #check-box-part label {
-    padding-left: 10px; /* Label textinin soluna padding ekler */
     cursor: pointer;
 }
 
@@ -73,7 +71,7 @@
     height: 20px;
     margin-right: 8px;
     border: 1px solid black;
-    border-radius: 4px;
+    
     background-color: white;
     transition: background-color 0.3s ease;
 }
@@ -90,7 +88,6 @@
 
 #button-part button {
     padding:8px;
-
   
 }
 
@@ -101,7 +98,7 @@
 
 #main-part-header p {
     font-family: "Poppins";
-    font-size: 1.7em;
+    font-size: 1.4em;
     font-style: italic;
     text-align: center;
 }
@@ -110,11 +107,12 @@
 .submit-button-poem{
     border:1px solid black;
     padding: 3px;
+   
 }
 
 #right-part {
     grid-column: span 3;
-    background: linear-gradient(to top left, #cccaca  50%, transparent 50%);
+    background: #eaeaea
 }
 
 /* Responsive Styles */

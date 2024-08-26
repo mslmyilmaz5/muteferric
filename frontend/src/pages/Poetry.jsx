@@ -173,6 +173,7 @@ const Poetry = () => {
             <div id="p-about-part-1-head"><p>Hakkında bir şeyler yaz</p></div>
             <div id="p-about-part-1-content">
               <textarea
+                id="x"
                 className="input-field"
                 rows="9"
                 placeholder={aboutOneText ? aboutOneText : "Hakkında bir şeyler yaz."}
@@ -193,7 +194,7 @@ const Poetry = () => {
         <div id="p-yazi-part">
           <div className="c-part" id="p-poem-part">
             <div id="h-pp"><strong>Şiirlerin</strong></div>
-            <div id="ccontents0">
+            <div id="h-pp-content">
               {poemsList.map((poem) => (
                 <div className="c-part-name" key={poem._id}
                 onClick={() => handleNavigateToPoem(poem._id)}
@@ -209,7 +210,7 @@ const Poetry = () => {
           </div>
           <div className="c-part" id="p-poem-part">
             <div id="h-pp"><strong>Yazıların</strong></div>
-            <div id="ccontents0">
+            <div id="h-pp-content">
               {essaysList.map((poem) => (
                 <div className="c-part-name" key={poem._id}
                 onClick={() => handleNavigateToPoem(poem._id)}
@@ -217,7 +218,6 @@ const Poetry = () => {
                   <div id="h-pp-title"><p>{poem.title}</p></div>
                   <div id="h-pp-button">
                     <div id="d-status">{poem.isVisible ? <MdOutlineVisibility /> : <MdOutlineVisibilityOff />}</div>
-                   
                   </div>
                 </div>
               ))}

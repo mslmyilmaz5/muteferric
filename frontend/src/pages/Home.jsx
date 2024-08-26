@@ -104,7 +104,7 @@ const Home = () => {
         <div id="left-1">
           {user ? <div id="left1-b"><p> Hoşgeldin <strong>{user.tokenUser.name}</strong></p></div>
             : <div id="left1-b"><p> Sen de kayıt olup hemen dolaşanların arasına katıl!</p></div>}
-          <div id="left1-c"><p> Müteferriç'te toplam</p></div>
+          <div id="left1-c"><p> <strong>Müteferriç'te toplam</strong></p></div>
 
           <div id="left1-c"><p> <strong>{dbInfoUser} </strong>dolaşan</p></div>
           <div id="left1-c"><p> <strong>{dbInfoPoet} </strong> varan</p></div>

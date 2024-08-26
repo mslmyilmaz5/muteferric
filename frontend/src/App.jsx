@@ -10,9 +10,7 @@ import { PoetrySingle } from './pages/PoetrySingle';
 import { useAuthContext } from './hooks/useAuthContext';
 import Admin from './pages/Admin'
 import AboutUs from './pages/AboutUs'
-import Dolasanlar from './pages/Dolasanlar';
-import Varanlar
- from './pages/Varanlar';
+
 export const App = () => {
   const { user } = useAuthContext();
   return (
@@ -20,8 +18,6 @@ export const App = () => {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/hakkimizda' element={<AboutUs />} />
-        <Route path='/dolasanlar' element={<Dolasanlar />} />
-        <Route path='/varanlar' element={<Varanlar />} />
         <Route path='/giris' element={!user ? <Login /> : <Navigate to="/" />} />
         <Route path='/kayit-ol' element={!user ? <Signup /> : <Navigate to="/" />} />
         <Route path='/admin' element={<Admin />} />

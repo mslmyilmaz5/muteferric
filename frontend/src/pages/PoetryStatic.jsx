@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/header';
-import { FaExpandAlt } from "react-icons/fa";
 import '../css/PoetryStatic.css';
 import BASE_URL from '../utils/url';
 import Loading from '../components/loading';
@@ -9,6 +8,7 @@ import one from '../assets/img/photo-default.png';
 import { formatDate } from '../utils/garbage';
 
 export const PoetryStatic = () => {
+
   const { user_id } = useParams();
   const [user, setUser] = useState(null);
   const [poems, setPoems] = useState([]);
@@ -24,37 +24,7 @@ export const PoetryStatic = () => {
   const handleNavigateToPoem = (poem_id) => {
     navigate(`/siir/${poem_id}`);
   };
-
-  const convertToBase64 = (e) => {
-    var render = new FileReader();
-    render.readAsDataURL(e.target.files[0]);
-
-    render.onload = () => {
-      setIsImageSelected(true);
-      setProfileImage(render.result);
-    };
-    render.onerror = error => {
-      console.log("Error:", error);
-    };
-  };
-
-  const uploadImage = async () => {
-    const response = await fetch(`${BASE_URL}/general/uploadImage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ base64: profileImage, userId: user_id }),
-      credentials: 'include'
-    });
-    const json = await response.json();
-
-    if (response.ok) {
-      alert('Fotoğrafın değiştirildi');
-      setIsImageSelected(false);
-    } else {
-      alert('Hata');
-    }
-  };
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -133,12 +103,13 @@ export const PoetryStatic = () => {
         <div id="p-user-photo">
           <img src={profileImage} alt="LoginPhoto" />
         </div>
+        <div id="banner"></div>
       </div>
       <div id="poetry-page-main-content">
         <div id="p-about-part">
           <div id="p-user-info-part">
             <div id="p-info-name"><p>İsim: <strong>{user.name}</strong></p></div>
-            <div id="p-info-name"><p>Mahlas: <strong>{user.mahlas}</strong></p></div>
+            {(user.user_type != "VP" && <div id="p-info-name"><p>Mahlas: <strong>{user.mahlas}</strong></p></div>)}
             <div id="p-info-name"><p>Hesap oluşturma tarihi: <strong>{formatDate(user.createdAt)}</strong></p></div>
             <div id="p-info-name"><p>Paylaşılan Şiir Sayısı: <strong>{poemsList.length}</strong></p></div>
             <div id="p-info-name"><p>Paylaşılan Yazı Sayısı: <strong>{essaysList.length}</strong></p></div>

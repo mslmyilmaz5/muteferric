@@ -1,7 +1,6 @@
 
 #p-about-part-1-static-content
 {
-
     font-size: 1.0em;
     font-family: 'Poppins', sans-serif;
     padding:10px;
@@ -11,8 +10,16 @@
 #p-page-left
 {
     grid-template-rows: auto 1fr;
-  
+    gap:30px;
+}
 
+#banner
+{
+    clip-path: polygon(50% 0%, 100% 0, 100% 35%, 100% 70%, 50% 100%, 50% 100%, 50% 100%, 0 70%, 0 0, 50% 0);
+    background-color: #cccaca;
+    display: grid;
+    width: 50%; /* Narrow the banner to 60% of the parent container */
+    margin: 0 auto; /* Center the banner horizontally */
 }
 
 .empty-message {

@@ -14,7 +14,7 @@
   display: grid;
   grid-template-rows: auto 1fr;
   gap: 20px; /* Increase gap for better spacing */
- 
+
   background-color: #ffffff; /* White background for content */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
   padding: 20px;
@@ -134,3 +134,150 @@
   background-color: #ccc;
   color: #000;
   }
+
+
+@media screen and (max-width: 768px) {
+
+  #content {
+    grid-template-rows: auto 1fr;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  #ct-header {
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+
+  }
+
+  #ct-header-photo {
+    width: 100px;
+    height: 100px;
+  }
+
+  .ct-header-title-head {
+    font-size: 1.5em;
+  }
+
+  #poet {
+    font-size: 1.2em;
+  }
+
+  #date {
+    font-size: 1em;
+  }
+
+  #ct-text {
+    font-size: 1em;
+    padding: 15px;
+  }
+}
+
+/* Media Queries for Responsive Design */
+@media screen and (max-width: 1024px) {
+  #content {
+    padding: 15px;
+  }
+
+  #ct-header {
+    gap: 15px;
+  }
+
+  #ct-header-photo img {
+    height: 130px;
+    width: 130px;
+  }
+
+  .ct-header-title-head {
+    font-size: 1.8em;
+  }
+
+  #poet {
+    font-size: 1.3em;
+  }
+
+  #date {
+    font-size: 1.1em;
+  }
+
+  #ct-text {
+    font-size: 1.1em;
+    padding: 15px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+
+  #content {
+    grid-template-rows: auto 1fr auto;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  #ct-header {
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+  }
+
+  #ct-header-photo {
+    width: 100px;
+    height: 100px;
+  }
+
+  .ct-header-title-head {
+    font-size: 1.6em;
+  }
+
+  #poet {
+    font-size: 1.2em;
+  }
+
+  #date {
+    font-size: 1em;
+  }
+
+  #ct-text {
+    font-size: 1.1em;
+    padding: 15px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #ct-header {
+    grid-template-columns: 1fr; /* Stacks the image and text vertically */
+    text-align: center;
+  }
+
+  #ct-header-photo {
+    width: 80px;
+    height: 80px;
+  }
+
+  .ct-header-title-head {
+    font-size: 1.4em;
+  }
+
+  #poet {
+    font-size: 1em;
+  }
+
+  #date {
+    font-size: 0.9em;
+  }
+
+  #ct-text {
+    font-size: 0.9em;
+    padding: 10px;
+  }
+
+  .confirm-dialog-buttons {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .confirm-dialog button {
+    font-size: 12px;
+    padding: 8px 15px;
+  }
+}
