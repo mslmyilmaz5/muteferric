@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import BASE_URL from '../utils/url';
 import { formatDate } from '../utils/garbage';
 import one from '../assets/img/photo-default.png';
+
 export const PoetrySingle = () => {
     const { poem_id } = useParams();
     const { user } = useAuthContext();
@@ -66,8 +67,6 @@ export const PoetrySingle = () => {
                         try {
                             const imageResponse = await fetch(`${BASE_URL}/general/getImage/${json.userId}`, {
                                 method: 'GET',
-                                headers: { 'Authorization': `Bearer ${user.token}` },
-                                credentials: 'include'
                             });
                             const imageJson = await imageResponse.json();
                             if (imageResponse.ok) {
@@ -86,6 +85,8 @@ export const PoetrySingle = () => {
                 console.error('Error fetching data:', error);
             }
         };
+
+       
 
         fetchPoem();
     }, [poem_id]);
@@ -147,7 +148,6 @@ export const PoetrySingle = () => {
                             <p><Link to={`/sair/${p_user ? p_user._id : '#'}`}>
                                 {p_user ? p_user.name : ''}
                             </Link></p>
-
                             <div id="div-buttons">
                             {checkIfUserPoem(poem, user) && (
                                 <div id="div-buttons">
@@ -196,73 +196,3 @@ export const PoetrySingle = () => {
 };
 
 export default PoetrySingle;
-
-
-/*  <div className="poem-single-content-page">
-         <div className="navbar-login"><Navbar /></div>
-         <div id="lleft">
-             <article id="article-left-up"></article>
-             <article id="article-left-down"></article>
-         </div>
-         <div id="poem-single-content-main">
-             <div id="p-s-h"><h1><strong>{poem.title}</strong></h1></div>
-             <div id="p-s-b">
-                 <div id="p-s-b-t">
-                     {poem.createdAt && (
-                         <p><strong>{formatDate(poem.createdAt)}</strong></p>
-                     )}
-                 </div>
-                 <div id="p-s-c-poem">
-                    <strong>
-                         <p>
-                             <Link to={`/sair/${p_user ? p_user._id : '#'}`}>
-                                 {p_user ? p_user.name : ''}
-                             </Link>
-                         </p>
-                     </strong>
-                 </div>
-                 {checkIfUserPoem(poem, user) && (
-                     <div id="p-s-b-b">
-                         <button
-                             className="arr-small-button"
-                             onClick={() => handleUpdate(poem.title, poem.poetry, poem.isVisible, true, poem._id, poem.type)}
-                         >
-                             <GrUpdate />
-                         </button>
-                         <button
-                             className="arr-small-button"
-                             onClick={() => setShowConfirmDialog(true)}
-                         >
-                             <MdDelete />
-                         </button>
-                     </div>
-                 )}
-             </div>
-             {poem.type === "p" && (
-                 <div id="p-s-c-p">
-                     <p dangerouslySetInnerHTML={{ __html: poem.poetry.replace(/\n/g, '<br />') }}></p>
-                 </div>
-             )}
-             {poem.type === "e" && (
-                 <div id="p-s-c-e">
-                     <p dangerouslySetInnerHTML={{ __html: poem.poetry.replace(/\n/g, '<br />') }}></p>
-                 </div>
-             )}
-         </div>
-         <div id="rright">
-             <article id="article-right-up"></article>
-             <article id="article-right-down"></article>
-         </div>
-         <div className="footer">
-             <p>&copy; 2024 Müteferriç.</p>
-         </div>
-         {showConfirmDialog && (
-             <div className="confirm-dialog">
-                 <p>Silmek istediğine emin misin?</p>
-                 <div className="confirm-dialog-buttons">
-                     <button onClick={handleDeleteClick}>Evet</button>
-                     <button onClick={() => setShowConfirmDialog(false)}>Hayır</button>
-                 </div>
-             </div>
-         )}
-     </div> */

@@ -119,7 +119,7 @@ const Home = () => {
       <div id="main-content">
         <div id="search-bar-content">
           <div id="title-search">
-            <p><strong>Müteferriç'de ara!</strong></p>
+            <p><strong>Müteferriç'te ara!</strong></p>
           </div>
           <div id="search-bar-div">
             <input

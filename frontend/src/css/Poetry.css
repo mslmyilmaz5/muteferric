@@ -1,46 +1,41 @@
+/* Base styles */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500;600;800&family=VT323&display=swap');
 
-.poetry-page-content{
+.poetry-page-content {
   display: grid;
   grid-template-columns: 1.5fr 5fr;
   grid-template-rows: auto 1fr auto;
   height: 100vh;
-  gap : 20px;
-  
+  gap: 20px;
 }
-
 
 #p-page-left {
   display: grid;
   grid-template-rows: auto auto 1fr;
   text-align: center;
   padding-left: 10px;
-  gap:30px;
- 
+  gap: 30px;
 }
 
 #p-user-photo {
- 
-  padding:10px;
+  padding: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; 
-
+  overflow: hidden;
 }
 
 #p-user-photo img {
   height: 250px;
   width: 250px;
-  max-width: 100%; 
-  max-height: 100%; 
-  object-fit: cover; 
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
   border: 1px solid #cccaca;
   border-radius: 8px;
   filter: grayscale(100%);
-  box-shadow: 16px 16px 16px rgba(0, 0, 0, 0.3); /* Add a shadow */
+  box-shadow: 16px 16px 16px rgba(0, 0, 0, 0.3);
 }
-
 
 #poetry-page-main-content {
   display: grid;
@@ -48,49 +43,33 @@
   gap: 10px;
   background-color: #fff;
   padding-right: 90px;
-
 }
 
-#p-yazi-part
-{
+#p-yazi-part {
   display: grid;
   grid-template-columns: 1fr 1fr;
- 
   gap: 10px;
 }
 
-.c-part 
-{
+.c-part {
   display: grid;
   grid-template-rows: auto 1fr;
-  
-  border: 1px solid #cccaca
+  border: 1px solid #cccaca;
 }
 
-#h-pp
-{
+#h-pp {
   text-align: center;
   padding: 10px;
   font-size: 1.3em;
   font-family: 'Poppins', sans-serif;
- 
-
 }
 
-#ccontents0
-{
-  padding:10px;
+#ccontents0 {
+  padding: 10px;
 }
 
-
-#ccontents
-{
-  padding:10px;
- 
-}
-.c-part-name
-{
-  padding:20px;
+.c-part-name {
+  padding: 20px;
   font-size: 1.1em;
   font-family: 'Poppins', sans-serif;
   display: grid;
@@ -98,32 +77,27 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 10px;
-  display: grid;
-  grid-template-columns: 1fr auto;
   margin-bottom: 10px;
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-
-.input-field{
-  border: none; /* Sınırları tamamen kaldır */
-  outline: none; /* Odaklanıldığında görünen sınırı da kaldır */
+.input-field {
+  border: none;
+  outline: none;
 }
 
-#h-pp-button
-{
+#h-pp-button {
   display: grid;
   grid-template-columns: auto auto;
   gap: 10px;
-  
 }
 
 #button-parts {
   padding: 10px;
-  gap: 15px; /* Aralığı biraz artırdım */
+  gap: 15px;
   display: flex;
-  flex-direction: column; /* Butonları dikey olarak hizalayalım */
-  align-items: center; /* Butonları ortalayalım */
+  flex-direction: column;
+  align-items: center;
 }
 
 .button-new-poetry {
@@ -132,27 +106,27 @@
   align-items: center;
   border: 1px solid #cccaca;
   padding: 10px;
-  transition: background-color 0.3s ease, transform 0.3s ease; /* Geçiş efektleri ekledim */
-  width: 100%; 
-  max-width: 300px; 
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  width: 100%;
+  max-width: 300px;
   border-radius: 8px;
 }
 
 .button-new-poetry:hover {
-  background-color: #e0e0e0; 
-  transform: translateY(-2px); 
+  background-color: #e0e0e0;
+  transform: translateY(-2px);
 }
 
 .button-new-poetry button {
-  background-color: transparent; 
-  border: none; 
-  color: #333; 
-  font-size: 16px; 
-  cursor: pointer; 
+  background-color: transparent;
+  border: none;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .button-new-poetry button:hover {
-  color: #000; 
+  color: #000;
 }
 
 #add-new-button {
@@ -160,113 +134,101 @@
   height: 100%;
 }
 
-#p-about-part
-{
+#p-about-part {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
-  
-}
-#p-about-part-1
-{
- display: grid;
- grid-template-rows: auto 1fr auto;
- border:1px solid #cccaca;
 }
 
-#p-user-info-part
-{
+#p-about-part-1 {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  border: 1px solid #cccaca;
+}
 
+#p-user-info-part {
   grid-template-rows: auto auto auto auto auto;
-  padding:20px;
-  border:1px solid #cccaca;
-
+  padding: 20px;
+  border: 1px solid #cccaca;
 }
 
-#p-info-name
-{
+#p-info-name {
   padding: 10px;
   border-bottom: 1px solid #cccaca;
-  
-
 }
 
-#p-info-name p 
-{
-
+#p-info-name p {
   text-align: center;
   font-size: 1.1em;
   font-family: 'Poppins', sans-serif;
 }
-#p-about-part-1-head
-{
- 
+
+#p-about-part-1-head {
   text-align: center;
   font-size: 1.4em;
   font-family: 'Poppins', sans-serif;
 }
 
-#user-about-buttons
-{ 
+#user-about-buttons {
   display: flex;
   justify-content: center;
   padding: 10px;
 }
 
-
-
-
-
-@media (max-width: 1000px) {
+/* Responsive styles */
+@media (max-width: 1200px) {
   .poetry-page-content {
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr auto;
-    gap: 20px;
   }
 
-  #p-page-left,
-  #p-page-right,
   #poetry-page-main-content {
-    grid-template-columns: 1fr;
+    padding-right: 10px;
+    padding-left: 10px;
   }
 
-  #p-poem-part {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
+  #p-yazi-part {
+    grid-template-columns: 1fr;
   }
 
   #p-about-part {
     grid-template-columns: 1fr;
   }
-
-
-  #p-poem-part1,
-  #p-poem-part2 {
-    border-right: none;
-    border-bottom: 1px solid #cccaca;
-  }
 }
 
-@media (max-width: 1000px) {
-  #p-about-user {
-    padding: 15px;
+@media (max-width: 768px) {
+  #p-page-left {
+    gap: 20px;
   }
 
-  #p-about-user p {
+  #p-user-photo img {
+    height: 150px;
+    width: 150px;
+  }
+
+  .c-part-name {
     font-size: 1em;
   }
 
-  #p-poem-part-1-head,
-  #p-about-part-1-head {
-    font-size: 1.2em;
+  #p-about-part-1 {
+    grid-template-rows: auto 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .button-new-poetry {
+    max-width: 100%;
   }
 
-  #poem-h-div {
-    padding: 3px;
+  #p-about-part-1 {
+    grid-template-rows: auto 1fr;
   }
 
-  #d-status,
-  #d-expand {
-    padding: 3px;
+  .c-part-name {
+    padding: 10px;
+  }
+
+  #p-info-name p {
+    font-size: 1em;
   }
 }

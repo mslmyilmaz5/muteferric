@@ -161,11 +161,10 @@ export const PoetryStatic = () => {
             <div id="ccontents0">
               {poemsList.length > 0 ? (
                 poemsList.map((poem) => (
-                  <div className="c-part-name" key={poem._id}>
+                  <div className="c-part-name" key={poem._id}
+                    onClick={() => handleNavigateToPoem(poem._id)}
+                    style={{ cursor: 'pointer' }}>
                     <div id="h-pp-title"><p>{poem.title}</p></div>
-                    <div id="h-pp-button">
-                      <div id="d-expand"><button onClick={() => handleNavigateToPoem(poem._id)}><FaExpandAlt /></button></div>
-                    </div>
                   </div>
                 ))
               ) : (
@@ -178,11 +177,11 @@ export const PoetryStatic = () => {
             <div id="ccontents">
               {essaysList.length > 0 ? (
                 essaysList.map((essay) => (
-                  <div className="c-part-name" key={essay._id}>
+                  <div className="c-part-name" key={essay._id}
+                    onClick={() => handleNavigateToPoem(essay._id)}
+                    style={{ cursor: 'pointer' }}>
                     <div id="h-pp-title"><p>{essay.title}</p></div>
-                    <div id="h-pp-button">
-                      <div id="d-expand"><button onClick={() => handleNavigateToPoem(essay._id)}><FaExpandAlt /></button></div>
-                    </div>
+
                   </div>
                 ))
               ) : (

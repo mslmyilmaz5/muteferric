@@ -195,11 +195,13 @@ const Poetry = () => {
             <div id="h-pp"><strong>Şiirlerin</strong></div>
             <div id="ccontents0">
               {poemsList.map((poem) => (
-                <div className="c-part-name" key={poem._id}>
+                <div className="c-part-name" key={poem._id}
+                onClick={() => handleNavigateToPoem(poem._id)}
+                style={{ cursor: 'pointer' }}>
                   <div id="h-pp-title"><p>{poem.title}</p></div>
                   <div id="h-pp-button">
                     <div id="d-status">{poem.isVisible ? <MdOutlineVisibility /> : <MdOutlineVisibilityOff />}</div>
-                    <div id="d-expand"><button onClick={() => handleNavigateToPoem(poem._id)}><FaExpandAlt /> </button></div>
+        
                   </div>
                 </div>
               ))}
@@ -209,11 +211,13 @@ const Poetry = () => {
             <div id="h-pp"><strong>Yazıların</strong></div>
             <div id="ccontents0">
               {essaysList.map((poem) => (
-                <div className="c-part-name" key={poem._id}>
+                <div className="c-part-name" key={poem._id}
+                onClick={() => handleNavigateToPoem(poem._id)}
+                style={{ cursor: 'pointer' }}>
                   <div id="h-pp-title"><p>{poem.title}</p></div>
                   <div id="h-pp-button">
                     <div id="d-status">{poem.isVisible ? <MdOutlineVisibility /> : <MdOutlineVisibilityOff />}</div>
-                    <div id="d-expand"><button onClick={() => handleNavigateToPoem(poem._id)}><FaExpandAlt /> </button></div>
+                   
                   </div>
                 </div>
               ))}
