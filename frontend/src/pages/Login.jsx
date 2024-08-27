@@ -3,6 +3,7 @@ import { useLogin } from '../hooks/useLogin'
 import '../css/Login.css';
 import Navbar from '../components/header';
 import one from '../assets/img/one.jpg';
+import { Helmet } from 'react-helmet-async';
 
 const Login = () => {
 
@@ -16,6 +17,13 @@ const Login = () => {
     }
 
     return (
+
+        <>
+        <Helmet>
+          <title>Şiirle | Giriş</title>
+          <meta name="description" content="Giriş yap." />
+          <link rel="canonical" href="/giris" />
+        </Helmet>
 
         <div className="login-page-content">
         <div className="navbar-login">
@@ -78,7 +86,7 @@ const Login = () => {
         </div>
     </div>
 
-
+    </>
     )
 
 }

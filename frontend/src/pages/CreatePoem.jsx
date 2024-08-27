@@ -4,9 +4,10 @@ import { usePoemFormPost } from '../hooks/usePoemFormPost';
 import { useAuthContext } from '../hooks/useAuthContext';
 import Navbar from '../components/header';
 import '../css/CreatePoem.css';
+import { Helmet } from 'react-helmet-async';
 
 export const CreatePoem = () => {
-  
+
   const location = useLocation();
   const { submitPoem, error, isLoading } = usePoemFormPost();
   const { user } = useAuthContext();
@@ -18,7 +19,7 @@ export const CreatePoem = () => {
   const type = location.state?.type;
 
   useEffect(() => {
-  
+
     if (location.state) {
       setTitle(location.state.defaultTitle || '');
       setPoetry(location.state.defaultPoetry || '');
@@ -27,101 +28,111 @@ export const CreatePoem = () => {
       setUpdatedPoemId(location.state.defaultPoemId || '');
     }
   }, [location.state]);
-  
+
   if (!user) {
     return <div>Please log in to create poems.</div>;
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await submitPoem(title, poetry, isVisible, isUpdated, updatedPoemId, type );
-    
+    await submitPoem(title, poetry, isVisible, isUpdated, updatedPoemId, type);
+
   };
 
   const handleCheckboxChange = (e) => {
     setIsVisible(e.target.checked);
   };
-  
+
   const setPtags = (type) => {
     const result = [];
-  
+
     if (type === "p") {
       result[0] = "\"Şiir hassastır. Öyle üstün körü yazmaya gelmez. İyice ölçüp tarttıktan sonra dizeceksin kelimeleri. Sonunu uyduracağım diye hakikati incitmeyeceksin.\""
-  
+    
+
     } else if (type === "e") {
       result[0] = "\"Alim unutmuş, kalem unutmamış.\"";
-      
-    } 
-  
+     
+
+    }
+
     return result;
   };
 
 
-  
-  const ptags = setPtags(type); // Make sure type is defined or passed as a prop
+
+  const ptags = setPtags(type);
   return (
-    <div className="create-poem-page">
-      <div className="navbar-login">
-        <Navbar />
-      </div>
-      <div id="left-part"></div>
-      <div id="main-part">
-        <div id="main-part-header">
-          <p>{ptags[0]}</p>
+    <>
+      <Helmet>
+        { type == 'p' ? <title>Şiirle | Yeni Şiir </title> : <title>Şiirle | Yeni Yazı</title> }
+        <meta name="description" content="Yeni şiir veya yazı oluştur" />
+        <link rel="canonical" href="/yeni-yazi-siir" />
+      </Helmet>
+      <div className="create-poem-page">
+        <div className="navbar-login">
+          <Navbar />
         </div>
-        
-        <div id="main-part-form">
-          <div id="form-head-input">
-            <input
-              type="text"
-              placeholder="SERLEVHA"
-              id="input-field-h"
-              maxLength={50}
-              onChange={(e) => setTitle(e.target.value)}
-              value={title}
-            />
+        <div id="left-part"></div>
+        <div id="main-part">
+          <div id="main-part-header">
+            <p>{ptags[0]}</p>
           </div>
-          <div id="form-poem-input">
-            <textarea
-              className="input-field"
-              rows="28"
-           
-              onChange={(e) => setPoetry(e.target.value)}
-              value={poetry}
-            />
-          </div>
-          <div id="form-poem-button-container">
-            <div id="check-box-part">
+
+          <div id="main-part-form">
+            <div id="form-head-input">
               <input
-                type="checkbox"
-                id="isVisible"
-                onChange={handleCheckboxChange}
-                checked={isVisible}
+                type="text"
+                placeholder="SERLEVHA"
+                id="input-field-h"
+                maxLength={50}
+                onChange={(e) => setTitle(e.target.value)}
+                value={title}
               />
-              <label htmlFor="isVisible">Herkes tarafından görülebilsin istiyorum.</label>
             </div>
-            <div id="button-part">
-              <button
-                type="submit"
-                className="submit-button-poem"
-                onClick={handleSubmit}
-                disabled={isLoading}
-              >
-                {isLoading ? 'Kaydediliyor...' : 'Kaydet'}
-              </button>
+            <div id="form-poem-input">
+              <textarea
+                className="input-field"
+                rows="28"
+
+                onChange={(e) => setPoetry(e.target.value)}
+                value={poetry}
+              />
+            </div>
+            <div id="form-poem-button-container">
+              <div id="check-box-part">
+                <input
+                  type="checkbox"
+                  id="isVisible"
+                  onChange={handleCheckboxChange}
+                  checked={isVisible}
+                />
+                <label htmlFor="isVisible">Herkes tarafından görülebilsin istiyorum.</label>
+              </div>
+              <div id="button-part">
+                <button
+                  type="submit"
+                  className="submit-button-poem"
+                  onClick={handleSubmit}
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Kaydediliyor...' : 'Kaydet'}
+                </button>
+              </div>
             </div>
           </div>
+          <div className="error-bar">
+            {error && <p>{error}</p>}
+          </div>
         </div>
-        <div className="error-bar">
-          {error && <p>{error}</p>}
+        <div id="right-part"></div>
+        <div className="footer">
+          <p>&copy; 2024 Müteferriç.</p>
         </div>
       </div>
-      <div id="right-part"></div>
-      <div className="footer">
-      <p>&copy; 2024 Müteferriç.</p>
-      </div>
-    </div>
+    </>
   );
+
 };
 
 export default CreatePoem;

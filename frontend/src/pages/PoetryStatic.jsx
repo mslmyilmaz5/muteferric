@@ -4,9 +4,9 @@ import Navbar from '../components/header';
 import '../css/PoetryStatic.css';
 import BASE_URL from '../utils/url';
 import Loading from '../components/loading';
-import one from '../assets/img/photo-default.png';
+import one from '../assets/img/photo-default.jpg';
 import { formatDate } from '../utils/garbage';
-
+import { Helmet } from 'react-helmet-async';
 export const PoetryStatic = () => {
 
   const { user_id } = useParams();
@@ -24,7 +24,7 @@ export const PoetryStatic = () => {
   const handleNavigateToPoem = (poem_id) => {
     navigate(`/siir/${poem_id}`);
   };
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -97,77 +97,86 @@ export const PoetryStatic = () => {
   }
 
   return (
-    <div className="poetry-page-content">
-      <div className="navbar-login"><Navbar /></div>
-      <div id="p-page-left">
-        <div id="p-user-photo">
-          <img src={profileImage} alt="LoginPhoto" />
-        </div>
-        <div id="banner"></div>
-      </div>
-      <div id="poetry-page-main-content">
-        <div id="p-about-part">
-          <div id="p-user-info-part">
-            <div id="p-info-name"><p>İsim: <strong>{user.name}</strong></p></div>
-            {(user.user_type != "VP" && <div id="p-info-name"><p>Mahlas: <strong>{user.mahlas}</strong></p></div>)}
-            <div id="p-info-name"><p>Hesap oluşturma tarihi: <strong>{formatDate(user.createdAt)}</strong></p></div>
-            <div id="p-info-name"><p>Paylaşılan Şiir Sayısı: <strong>{poemsList.length}</strong></p></div>
-            <div id="p-info-name"><p>Paylaşılan Yazı Sayısı: <strong>{essaysList.length}</strong></p></div>
+    <>
+      <Helmet>
+        <title> Şair {user.name}</title>
+        <meta name="description" content={`${user ? user.name : ''}'in bütün şiir ve yazılarını okuyun.
+                Şiirle platformunda, bu ve diğer şairleri keşfedin.`} />
+        <link rel="canonical" href="/sair" />
+      </Helmet>
+      <div className="poetry-page-content">
+        <div className="navbar-login"><Navbar /></div>
+        <div id="p-page-left">
+          <div id="p-user-photo">
+            <img src={profileImage} alt="LoginPhoto" />
           </div>
-          <div id="p-about-part-1">
-            <div id="p-about-part-1-head"><p><strong>Hakkında</strong></p></div>
-            <div id="p-about-part-1-static-content">
-              {aboutOne.length > 0 ? (
-                <p>{aboutOne}</p>
-              ) : (
-                <div className="empty-message"><p>Hakkında kısmı eklenmedi</p></div>
-              )}
+          <div id="banner"></div>
+        </div>
+        <div id="poetry-page-main-content">
+          <div id="p-about-part">
+            <div id="p-user-info-part">
+              <div id="p-info-name"><p>İsim: <strong>{user.name}</strong></p></div>
+              {(user.user_type != "VP" && <div id="p-info-name"><p>Mahlas: <strong>{user.mahlas}</strong></p></div>)}
+              <div id="p-info-name"><p>Hesap oluşturma tarihi: <strong>{formatDate(user.createdAt)}</strong></p></div>
+              <div id="p-info-name"><p>Paylaşılan Şiir Sayısı: <strong>{poemsList.length}</strong></p></div>
+              <div id="p-info-name"><p>Paylaşılan Yazı Sayısı: <strong>{essaysList.length}</strong></p></div>
+            </div>
+            <div id="p-about-part-1">
+              <div id="p-about-part-1-head"><p><strong>Hakkında</strong></p></div>
+              <div id="p-about-part-1-static-content">
+                {aboutOne.length > 0 ? (
+                  <p>{aboutOne}</p>
+                ) : (
+                  <div className="empty-message"><p>Hakkında kısmı eklenmedi</p></div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div id="p-yazi-part">
+            <div className="c-part" id="p-poem-part">
+              <div id="h-pp"><strong>Şiirleri</strong></div>
+              <div id="ccontents0">
+                {poemsList.length > 0 ? (
+                  poemsList.map((poem) => (
+                    <div className="c-part-name" key={poem._id}
+                      onClick={() => handleNavigateToPoem(poem._id)}
+                      style={{ cursor: 'pointer' }}>
+                      <div id="h-pp-title"><p>{poem.title}</p></div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="empty-message"><p>Henüz eklenen şiir yok</p></div>
+                )}
+              </div>
+            </div>
+            <div className="c-part" id="p-poem-part">
+              <div id="h-pp"><strong>Yazıları</strong></div>
+              <div id="ccontents">
+                {essaysList.length > 0 ? (
+                  essaysList.map((essay) => (
+                    <div className="c-part-name" key={essay._id}
+                      onClick={() => handleNavigateToPoem(essay._id)}
+                      style={{ cursor: 'pointer' }}>
+                      <div id="h-pp-title"><p>{essay.title}</p></div>
+
+                    </div>
+                  ))
+                ) : (
+                  <div className="empty-message"><p>Henüz eklenen yazı yok</p></div>
+                )}
+              </div>
             </div>
           </div>
         </div>
 
-        <div id="p-yazi-part">
-          <div className="c-part" id="p-poem-part">
-            <div id="h-pp"><strong>Şiirleri</strong></div>
-            <div id="ccontents0">
-              {poemsList.length > 0 ? (
-                poemsList.map((poem) => (
-                  <div className="c-part-name" key={poem._id}
-                    onClick={() => handleNavigateToPoem(poem._id)}
-                    style={{ cursor: 'pointer' }}>
-                    <div id="h-pp-title"><p>{poem.title}</p></div>
-                  </div>
-                ))
-              ) : (
-                <div className="empty-message"><p>Henüz eklenen şiir yok</p></div>
-              )}
-            </div>
-          </div>
-          <div className="c-part" id="p-poem-part">
-            <div id="h-pp"><strong>Yazıları</strong></div>
-            <div id="ccontents">
-              {essaysList.length > 0 ? (
-                essaysList.map((essay) => (
-                  <div className="c-part-name" key={essay._id}
-                    onClick={() => handleNavigateToPoem(essay._id)}
-                    style={{ cursor: 'pointer' }}>
-                    <div id="h-pp-title"><p>{essay.title}</p></div>
-
-                  </div>
-                ))
-              ) : (
-                <div className="empty-message"><p>Henüz eklenen yazı yok</p></div>
-              )}
-            </div>
-          </div>
+        <div className="footer">
+          <p>&copy; 2024 Müteferriç.</p>
         </div>
       </div>
-
-      <div className="footer">
-        <p>&copy; 2024 Müteferriç.</p>
-      </div>
-    </div>
+    </>
   );
+
 };
 
 export default PoetryStatic;

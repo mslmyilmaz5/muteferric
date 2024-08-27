@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSignup } from '../hooks/useSignup';
 import login_photo_2 from "../assets/img/two.jpg"
 import Navbar from '../components/header';
-
+import { Helmet } from 'react-helmet-async';
 
 const Signup = () => {
     const [email, setEmail] = useState('');
@@ -23,7 +23,12 @@ const Signup = () => {
 
 
     return (
-
+        <>
+        <Helmet>
+          <title>Şiirle | Kayıt OL</title>
+          <meta name="description" content="Kayıt ol." />
+          <link rel="canonical" href="/kayit-ol" />
+        </Helmet>
         <div className="login-page-content">
             <div className="navbar-login">
                 <Navbar />
@@ -101,6 +106,7 @@ const Signup = () => {
             <p>&copy; 2024 Müteferriç.</p>
             </div>
         </div>
+        </>
     );
 };
 

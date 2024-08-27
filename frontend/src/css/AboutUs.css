@@ -9,7 +9,7 @@ body {
 #about-us-content {
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto 1fr auto;
     height: 100vh;    
 }
 
@@ -25,12 +25,70 @@ body {
     justify-content: center;
     align-items: center;
     padding:20px;
-    font-size: 2.0em;
+    font-size: 2em;
     font-family: "Satisfy", cursive;
 }
 #about-us-main-content
 {
     padding:20px;
-    font-size: 1.3em;
+    font-size: 1.2em;
     font-family: "Satisfy", cursive;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    #about-us-content {
+        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-rows: auto 1fr auto;
+    }
+
+    #about-us-main-head {
+        font-size: 1.8em;
+    }
+
+    #about-us-main-content {
+        font-size: 1.2em;
+    }
+}
+
+@media (max-width: 992px) {
+    #about-us-content {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+ 
+    }
+
+    #about-us-left, #about-us-right {
+        display: none;
+    }
+
+    #about-us-main-head {
+        font-size: 1.6em;
+    }
+
+    #about-us-main-content {
+        font-size: 1.1em;
+    }
+}
+
+@media (max-width: 768px) {
+    #about-us-main-head {
+        font-size: 1.4em;
+    }
+
+    #about-us-main-content {
+        font-size: 1em;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    #about-us-main-head {
+        font-size: 1.2em;
+    }
+
+    #about-us-main-content {
+        font-size: 0.9em;
+        padding: 10px;
+    }
 }

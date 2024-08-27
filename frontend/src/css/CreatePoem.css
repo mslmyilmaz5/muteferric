@@ -160,6 +160,9 @@
 }
 
 @media (max-width: 480px) {
+
+  
+    
     #main-part-header p {
         font-size: 1.2em;
     }

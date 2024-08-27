@@ -3,16 +3,16 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { usePoemContext } from '../hooks/usePoemContext';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/header';
-import { FaExpandAlt } from "react-icons/fa";
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 import { useAuthUpdate } from "../hooks/useAuthUpdate";
 import { VscSaveAs } from "react-icons/vsc";
 import '../css/Poetry.css';
 import BASE_URL from '../utils/url';
 import InformationPO from '../components/informationPO';
-import one from '../assets/img/photo-default.png';
+import one from '../assets/img/photo-default.jpg';
 import Loading from '../components/loading';
 import { formatDate } from '../utils/garbage';
+import { Helmet } from 'react-helmet-async';
 
 const Poetry = () => {
   const { user } = useAuthContext();
@@ -125,6 +125,12 @@ const Poetry = () => {
   }
 
   return (
+    <>
+    <Helmet>
+      <title>Şiirle | Profilim</title>
+      <meta name="description" content="Profil sayfasında şiir ve yazılarını gör. Yeni şiir veya yazı oluştur." />
+      <link rel="canonical" href="/profilim" />
+    </Helmet>
     <div className="poetry-page-content">
       <div className="navbar-login"><Navbar /></div>
       <div id="p-page-left">
@@ -229,6 +235,7 @@ const Poetry = () => {
         <p>&copy; 2024 Müteferriç.</p>
       </div>
     </div>
+    </>
   );
 };
 
